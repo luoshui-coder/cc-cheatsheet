@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Code 速查表</title>
+  <meta name="description"
+    content="最全面的 Claude Code 速查表 — 键盘快捷键、斜杠命令、CLI 标志、MCP 服务器、记忆文件、技能、代理、环境变量。支持中英文切换。可打印 A4 横版。">
+  <meta name="keywords"
+    content="Claude Code, 速查表, cheat sheet, Claude CLI, Anthropic, 键盘快捷键, 斜杠命令, MCP, CLAUDE.md, AI 编程, 参考卡">
+  <link rel="canonical" href="https://cc.storyfox.cz/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Claude Code 速查表 — 完整参考">
+  <meta property="og:description" content="所有 Claude Code 快捷键、命令、标志、MCP 配置、记忆文件和环境变量，一页搞定。支持中英文切换。">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Claude Code 速查表 — 完整参考">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⌨️</text></svg>">
+  <style>
+    /* === RESET & BASE === */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --keyboard-bg: #EFF6FF;
+      --keyboard-header: #2563EB;
+      --slash-bg: #F5F3FF;
+      --slash-header: #7C3AED;
+      --skills-bg: #ECFDF5;
+      --skills-header: #059669;
+      --memory-bg: #FFFBEB;
+      --memory-header: #D97706;
+      --config-bg: #FFF7ED;
+      --config-header: #C2410C;
+      --workflows-bg: #FEF2F2;
+      --workflows-header: #DC2626;
+      --mcp-bg: #ECFEFF;
+      --mcp-header: #0891B2;
+      --cli-bg: #F9FAFB;
+      --cli-header: #4B5563;
+      --footer-bg: #1F2937;
+      --footer-text: #F9FAFB;
+
+      --font-sans: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    }
+
+    html {
+      font-size: 12px;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      line-height: 1.15;
+      background: #fff;
+      color: #1F2937;
+      padding: 6mm;
+    }
+
+    @page {
+      size: A4 landscape;
+      margin: 8mm;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 279mm;
+      margin: 0 auto;
+    }
+
+    /* === HEADER === */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2mm;
+      padding-bottom: 1mm;
+      border-bottom: 1px solid #E5E7EB;
+    }
+
+    .header h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .header-meta {
+      font-size: 0.75rem;
+      color: #6B7280;
+      text-align: right;
+      min-width: 14em;
+    }
+
+    .header-meta .version-info {
+      display: block;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .header-meta .last-updated {
+      display: block;
+      font-size: 0.7rem;
+      color: #9CA3AF;
+    }
+
+    /* === CHANGELOG === */
+    .changelog {
+      background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+      border: 1px solid #F59E0B;
+      border-radius: 4px;
+      padding: 1.5mm 3mm;
+      margin-bottom: 2mm;
+      font-size: 0.72rem;
+    }
+
+    .changelog-header {
+      font-weight: 700;
+      color: #92400E;
+      margin-bottom: 0.5mm;
+      display: flex;
+      align-items: center;
+      gap: 1mm;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .changelog-dismiss {
+      margin-left: auto;
+      font-size: 0.85rem;
+      color: #92400E;
+      cursor: pointer;
+      opacity: 0.6;
+      line-height: 1;
+    }
+
+    .changelog-dismiss:hover {
+      opacity: 1;
+    }
+
+    .changelog-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1mm 4mm;
+      color: #78350F;
+      list-style: none;
+    }
+
+    .changelog-list li {
+      display: flex;
+      align-items: center;
+      gap: 1mm;
+    }
+
+    .changelog-list li::before {
+      content: "•";
+      color: #F59E0B;
+      font-weight: bold;
+    }
+
+    /* === MAIN GRID === */
+    .main-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 1fr;
+      gap: 2mm;
+      align-items: stretch;
+    }
+
+    /* === SECTION BASE === */
+    .section {
+      border-radius: 3px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .section-keyboard-mcp>.section:last-child,
+    .section-slash-memory>.section:last-child,
+    .section-workflows-config>.section:last-child,
+    .section-skills-cli>.section:last-child {
+      flex: 1;
+    }
+
+    .section-header {
+      padding: 1.2mm 2mm;
+      color: white;
+      font-weight: 700;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      display: flex;
+      align-items: center;
+      gap: 1mm;
+    }
+
+    .section-content {
+      padding: 1.5mm 2.5mm;
+      flex: 1;
+    }
+
+    /* === SUB-SECTION === */
+    .sub-header {
+      font-weight: 700;
+      font-style: italic;
+      font-size: 0.75rem;
+      color: #374151;
+      margin-top: 1.2mm;
+      margin-bottom: 0.4mm;
+      padding-bottom: 0.3mm;
+      border-bottom: 1px dotted rgba(0, 0, 0, 0.15);
+    }
+
+    .sub-header:first-child {
+      margin-top: 0;
+    }
+
+    /* === KEY-VALUE ROWS === */
+    .row {
+      display: flex;
+      gap: 1.5mm;
+      padding: 0.3mm 0;
+      line-height: 1.2;
+    }
+
+    .key {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #1F2937;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .desc {
+      font-size: 0.8rem;
+      color: #4B5563;
+      flex: 1;
+    }
+
+    /* === KEYCAP STYLE === */
+    .keycap {
+      display: inline-block;
+      background: linear-gradient(180deg, #FAFAFA 0%, #E5E7EB 100%);
+      border: 1px solid #D1D5DB;
+      border-radius: 2px;
+      padding: 0.2mm 1.2mm;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #374151;
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1), inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+      margin-right: 0.3mm;
+    }
+
+    /* === NEW BADGE === */
+    .badge-new {
+      display: inline-block;
+      background: #EF4444;
+      color: white;
+      font-size: 0.55rem;
+      font-weight: 700;
+      padding: 0.2mm 1mm;
+      border-radius: 2px;
+      margin-left: 1mm;
+      vertical-align: middle;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    /* === SECTION SPECIFIC COLORS === */
+    .section-keyboard {
+      background: var(--keyboard-bg);
+    }
+
+    .section-keyboard .section-header {
+      background: var(--keyboard-header);
+    }
+
+    .section-slash {
+      background: var(--slash-bg);
+    }
+
+    .section-slash .section-header {
+      background: var(--slash-header);
+    }
+
+    .section-skills {
+      background: var(--skills-bg);
+    }
+
+    .section-skills .section-header {
+      background: var(--skills-header);
+    }
+
+    .section-memory {
+      background: var(--memory-bg);
+    }
+
+    .section-memory .section-header {
+      background: var(--memory-header);
+    }
+
+    .section-workflows {
+      background: var(--workflows-bg);
+    }
+
+    .section-workflows .section-header {
+      background: var(--workflows-header);
+    }
+
+    .section-mcp {
+      background: var(--mcp-bg);
+    }
+
+    .section-mcp .section-header {
+      background: var(--mcp-header);
+    }
+
+    .section-cli {
+      background: var(--cli-bg);
+    }
+
+    .section-cli .section-header {
+      background: var(--cli-header);
+    }
+
+    .section-config {
+      background: var(--config-bg);
+    }
+
+    .section-config .section-header {
+      background: var(--config-header);
+    }
+
+    /* === GRID PLACEMENT === */
+    .section-keyboard-mcp {
+      grid-column: 1;
+      grid-row: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2mm;
+    }
+
+    .section-slash-memory {
+      grid-column: 2;
+      grid-row: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2mm;
+    }
+
+    .section-workflows-config {
+      grid-column: 3;
+      grid-row: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2mm;
+    }
+
+    .section-skills-cli {
+      grid-column: 4;
+      grid-row: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2mm;
+    }
+
+    /* === FOOTER === */
+    .footer {
+      margin-top: 2mm;
+      background: var(--footer-bg);
+      color: var(--footer-text);
+      padding: 1.5mm 2.5mm;
+      border-radius: 3px;
+      font-size: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5mm;
+    }
+
+    .footer-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2mm;
+      align-items: center;
+    }
+
+    .footer-label {
+      font-weight: 700;
+      color: #9CA3AF;
+      margin-right: 1mm;
+    }
+
+    .footer-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 1mm;
+    }
+
+    .footer-item code {
+      font-family: var(--font-mono);
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.3mm 1mm;
+      border-radius: 2px;
+    }
+
+    .footer-sep {
+      color: #6B7280;
+    }
+
+    /* === PRINT STYLES === */
+    @media print {
+      html {
+        font-size: 8.5px !important;
+      }
+
+      body {
+        padding: 0;
+        background: white;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .page {
+        max-width: none;
+        width: 100%;
+        height: 100vh;
+      }
+
+      .main-grid {
+        gap: 1.5mm;
+      }
+
+      .section-keyboard-mcp,
+      .section-slash-memory,
+      .section-workflows-config,
+      .section-skills-cli {
+        gap: 1.5mm;
+      }
+
+      .section {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .section-content {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .sub-header {
+        break-after: avoid;
+        page-break-after: avoid;
+      }
+
+      .row {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .sub-header+.row,
+      .sub-header+.two-col,
+      .sub-header+.three-col {
+        break-before: avoid;
+        page-break-before: avoid;
+      }
+
+      .key,
+      .keycap,
+      code,
+      .footer-item code {
+        font-family: 'Courier New', 'Courier', monospace !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .section-header {
+        padding: 0.8mm 2mm;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .section-content {
+        padding: 1mm 2mm;
+      }
+
+      .row {
+        padding: 0.15mm 0;
+      }
+
+      .sub-header {
+        margin-top: 0.8mm;
+      }
+
+      .keycap {
+        background: #F3F4F6 !important;
+        box-shadow: none;
+        border: 1px solid #9CA3AF;
+      }
+
+      .footer {
+        margin-top: 1mm;
+        padding: 1mm 2mm;
+        background: #374151 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .os-toggle,
+      .lang-toggle {
+        display: none !important;
+      }
+
+      .header {
+        margin-bottom: 1.5mm;
+      }
+
+      .changelog {
+        display: none !important;
+      }
+    }
+
+    /* === RESPONSIVE === */
+    @media screen and (max-width: 1100px) {
+      html {
+        font-size: 10px;
+      }
+
+      .main-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+        align-items: start;
+      }
+
+      .section-keyboard-mcp {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .section-slash-memory {
+        grid-column: 2;
+        grid-row: 1;
+      }
+
+      .section-workflows-config {
+        grid-column: 1;
+        grid-row: 2;
+      }
+
+      .section-skills-cli {
+        grid-column: 2;
+        grid-row: 2;
+      }
+    }
+
+    @media screen and (max-width: 600px) {
+      html {
+        font-size: 11px;
+      }
+
+      body {
+        padding: 3mm;
+      }
+
+      .header h1 {
+        font-size: 1.2rem;
+        white-space: nowrap;
+      }
+
+      .header {
+        flex-wrap: wrap;
+        gap: 4px;
+        justify-content: space-between;
+      }
+
+      .header-right {
+        gap: 2mm;
+      }
+
+      .os-toggle,
+      .lang-toggle {
+        order: -1;
+      }
+
+      .os-btn,
+      .lang-btn {
+        padding: 2px 6px;
+      }
+
+      .os-btn svg {
+        width: 11px;
+        height: 11px;
+      }
+
+      .main-grid {
+        grid-template-columns: 1fr;
+        align-items: start;
+      }
+
+      .section-keyboard-mcp,
+      .section-slash-memory,
+      .section-workflows-config,
+      .section-skills-cli {
+        grid-column: 1;
+        grid-row: auto;
+      }
+
+      .footer-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+      }
+
+      .changelog-list {
+        flex-direction: column;
+        gap: 1mm;
+      }
+    }
+
+    /* === OS TOGGLE === */
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 3mm;
+    }
+
+    .os-toggle,
+    .lang-toggle {
+      display: flex;
+      border: 1px solid #9CA3AF;
+      border-radius: 5px;
+      overflow: hidden;
+      background: #F3F4F6;
+    }
+
+    .os-btn,
+    .lang-btn {
+      background: #fff;
+      border: none;
+      padding: 3px 8px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      line-height: 1;
+      color: #6B7280;
+      transition: background 0.15s, color 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .os-btn+.os-btn,
+    .lang-btn+.lang-btn {
+      border-left: 1px solid #9CA3AF;
+    }
+
+    .os-btn.active,
+    .lang-btn.active {
+      background: #111827;
+      color: #fff;
+    }
+
+    .os-btn:hover:not(.active),
+    .lang-btn:hover:not(.active) {
+      background: #F3F4F6;
+    }
+
+    .lang-btn {
+      font-weight: 600;
+      font-size: 0.75rem;
+      padding: 3px 7px;
+    }
+
+    /* === COMPACT MULTI-COLUMN LISTS === */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 4mm;
+    }
+
+    .three-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0 3mm;
+    }
+
+    @media screen and (max-width: 500px) {
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <!-- HEADER -->
+    <header class="header">
+      <h1 data-zh="Claude Code 速查表" data-en="Claude Code Cheat Sheet">Claude Code 速查表</h1>
+      <div class="header-right">
+        <div class="os-toggle" id="osToggle">
+          <button class="os-btn active" data-os="mac" title="Mac shortcuts"><svg width="14" height="14"
+              viewBox="0 0 814 1000" fill="currentColor">
+              <path
+                d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105.6-57.8-155.5-127.4c-58.4-83-106.3-211.5-106.3-334.2 0-196.5 127.8-300.9 253.3-300.9 66.8 0 122.4 43.4 164.1 43.4 39.5 0 101.1-46 176.2-46 28.5 0 130.9 2.6 198.3 99.1zm-169.5-92.8c31.2-37 52.4-88.1 52.4-139.3 0-7.1-.6-14.3-1.9-20.1-50 1.6-109.2 33.3-145 75.1-25.8 29.3-52.4 79.8-52.4 131.6 0 7.8.6 15.6 1.3 18.2 2.6.6 6.4 1.3 10.3 1.3 44.7 0 101.1-30.5 135.3-66.8z" />
+            </svg></button>
+          <button class="os-btn" data-os="win" title="Windows shortcuts"><svg width="14" height="14" viewBox="0 0 88 88"
+              fill="currentColor">
+              <path
+                d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 71.48l-.026-25.55zm4.326-39.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z" />
+            </svg></button>
+        </div>
+        <div class="lang-toggle" id="langToggle">
+          <button class="lang-btn active" data-lang="zh" title="中文">中</button>
+          <button class="lang-btn" data-lang="en" title="English">EN</button>
+        </div>
+        <div class="header-meta">
+          <span class="version-info">Claude Code v2.1.83</span>
+          <span class="last-updated" data-zh="最后更新: 2026年3月25日" data-en="Last updated: March 25, 2026">最后更新:
+            2026年3月25日</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- CHANGELOG -->
+    <div class="changelog">
+      <div class="changelog-header"><a href="https://code.claude.com/docs/en/changelog" target="_blank"
+          style="color: inherit; text-decoration: none; border-bottom: 1px dashed #92400E;" data-zh="📋 近期变更"
+          data-en="📋 Recent Changes">📋 近期变更</a> <span class="changelog-dismiss"
+          onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
+      <ul class="changelog-list">
+        <li data-zh="managed-settings.d/ 插入式策略片段 (v2.1.83)"
+          data-en="managed-settings.d/ drop-in policy fragments (v2.1.83)"><code>managed-settings.d/</code> 插入式策略片段
+          (v2.1.83)</li>
+        <li data-zh="CwdChanged / FileChanged hook 事件" data-en="CwdChanged / FileChanged hook events">
+          <code>CwdChanged</code> / <code>FileChanged</code> hook 事件
+        </li>
+        <li data-zh="终止代理快捷键 → Ctrl+X Ctrl+K（原为 Ctrl+F）" data-en="Kill-agents keybinding → Ctrl+X Ctrl+K (was Ctrl+F)">
+          终止代理快捷键 → <code>Ctrl+X Ctrl+K</code>（原为 Ctrl+F）</li>
+        <li data-zh="转录搜索: / 在详细模式中, n/N 步进" data-en="Transcript search: / in verbose, n/N step">转录搜索: <code>/</code>
+          在详细模式中, <code>n</code>/<code>N</code> 步进</li>
+        <li data-zh="Ctrl+X Ctrl+E — 打开编辑器（Ctrl+G 别名）" data-en="Ctrl+X Ctrl+E — open editor (alias for Ctrl+G)">
+          <code>Ctrl+X Ctrl+E</code> — 打开编辑器（Ctrl+G 别名）
+        </li>
+        <li data-zh="initialPrompt 代理 frontmatter" data-en="initialPrompt agent frontmatter"><code>initialPrompt</code>
+          代理 frontmatter</li>
+      </ul>
+    </div>
+
+    <!-- MAIN GRID -->
+    <main class="main-grid">
+
+      <!-- KEYBOARD + MCP WRAPPER -->
+      <div class="section-keyboard-mcp">
+        <!-- KEYBOARD SHORTCUTS -->
+        <section class="section section-keyboard">
+          <div class="section-header" data-zh="⌨️ 键盘快捷键" data-en="⌨️ Keyboard Shortcuts">⌨️ 键盘快捷键</div>
+          <div class="section-content">
+            <div class="sub-header" data-zh="常用控制" data-en="General Controls">常用控制</div>
+            <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">C</span></span>
+              <span class="desc" data-zh="取消输入/生成" data-en="Cancel input/generation">取消输入/生成</span>
+            </div>
+            <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">D</span></span>
+              <span class="desc" data-zh="退出会话" data-en="Exit session">退出会话</span>
+            </div>
+            <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">L</span></span>
+              <span class="desc" data-zh="清屏" data-en="Clear screen">清屏</span>
+            </div>
+            <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">O</span></span>
+              <span class="desc" data-zh="切换详细输出" data-en="Toggle verbose output">切换详细输出</span>
+            </div>
+            <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">R</span></span>
+              <span class="desc" data-zh="反向搜索历史" data-en="Reverse search history">反向搜索历史</span>
+            </div>
+            <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">G</span></span>
+              <span class="desc" data-zh="在编辑器中打开提示" data-en="Open prompt in editor">在编辑器中打开提示</span>
+            </div>
+            <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">X</span> <span
+                  class="keycap">Ctrl</span><span class="keycap">E</span></span> <span class="desc"
+                data-zh="在编辑器中打开（别名）" data-en="Open in editor (alias)">在编辑器中打开（别名）<span class="badge-new"
+                  data-added="2026-03-25">NEW</span></span></div>
+            <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">B</span></span>
+              <span class="desc" data-zh="后台运行任务" data-en="Background running task">后台运行任务</span>
+            </div>
+            <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">T</span></span>
+              <span class="desc" data-zh="切换任务列表" data-en="Toggle task list">切换任务列表</span>
+            </div>
+            <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">V</span></span>
+              <span class="desc" data-zh="粘贴图片" data-en="Paste image">粘贴图片</span>
+            </div>
+            <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">X</span> <span
+                  class="keycap">Ctrl</span><span class="keycap">K</span></span> <span class="desc" data-zh="终止后台代理"
+                data-en="Kill background agents">终止后台代理<span class="badge-new" data-added="2026-03-25">NEW</span></span>
+            </div>
+            <div class="row"><span class="key"><span class="keycap">Esc</span><span class="keycap">Esc</span></span>
+              <span class="desc" data-zh="回退 / 撤销" data-en="Rewind / undo">回退 / 撤销</span>
+            </div>
+
+            <div class="sub-header" data-zh="模式切换" data-en="Mode Switching">模式切换</div>
+            <div class="row"><span class="key"><span class="keycap">Shift</span><span class="keycap">Tab</span></span>
+              <span class="desc" data-zh="循环切换权限模式" data-en="Cycle permission modes">循环切换权限模式</span>
+            </div>
+            <div class="row"><span class="key"><span class="keycap">Alt</span><span class="keycap">P</span></span> <span
+                class="desc" data-zh="切换模型" data-en="Switch model">切换模型</span></div>
+            <div class="row"><span class="key"><span class="keycap">Alt</span><span class="keycap">T</span></span> <span
+                class="desc" data-zh="切换思考模式" data-en="Toggle thinking">切换思考模式</span></div>
+
+            <div class="sub-header" data-zh="输入" data-en="Input">输入</div>
+            <div class="row"><span class="key"><span class="keycap">\</span><span class="keycap">Enter</span></span>
+              <span class="desc" data-zh="换行（快捷）" data-en="Newline (quick)">换行（快捷）</span>
+            </div>
+            <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">J</span></span>
+              <span class="desc" data-zh="换行（控制序列）" data-en="Newline (control seq)">换行（控制序列）</span>
+            </div>
+
+            <div class="sub-header" data-zh="前缀" data-en="Prefixes">前缀</div>
+            <div class="row"><span class="key">/</span> <span class="desc" data-zh="斜杠命令"
+                data-en="Slash command">斜杠命令</span></div>
+            <div class="row"><span class="key">!</span> <span class="desc" data-zh="直接执行 bash"
+                data-en="Direct bash">直接执行 bash</span></div>
+            <div class="row"><span class="key">@</span> <span class="desc" data-zh="文件引用 + 自动补全"
+                data-en="File mention + autocomplete">文件引用 + 自动补全</span></div>
+
+            <div class="sub-header" data-zh="会话选择器" data-en="Session Picker">会话选择器</div>
+            <div class="row"><span class="key"><span class="keycap">↑↓</span></span> <span class="desc" data-zh="导航"
+                data-en="Navigate">导航</span></div>
+            <div class="row"><span class="key"><span class="keycap">←→</span></span> <span class="desc" data-zh="展开/折叠"
+                data-en="Expand/collapse">展开/折叠</span></div>
+            <div class="row"><span class="key"><span class="keycap">P</span></span> <span class="desc" data-zh="预览"
+                data-en="Preview">预览</span></div>
+            <div class="row"><span class="key"><span class="keycap">R</span></span> <span class="desc" data-zh="重命名"
+                data-en="Rename">重命名</span></div>
+            <div class="row"><span class="key"><span class="keycap">/</span></span> <span class="desc" data-zh="搜索"
+                data-en="Search">搜索</span></div>
+            <div class="row"><span class="key"><span class="keycap">A</span></span> <span class="desc" data-zh="所有项目"
+                data-en="All projects">所有项目</span></div>
+            <div class="row"><span class="key"><span class="keycap">B</span></span> <span class="desc" data-zh="当前分支"
+                data-en="Current branch">当前分支</span></div>
+          </div>
+        </section>
+
+        <!-- MCP SERVERS -->
+        <section class="section section-mcp">
+          <div class="section-header" data-zh="🔌 MCP 服务器" data-en="🔌 MCP Servers">🔌 MCP 服务器</div>
+          <div class="section-content">
+            <div class="sub-header" data-zh="添加服务器" data-en="Add Servers">添加服务器</div>
+            <div class="row"><span class="key">--transport http</span> <span class="desc" data-zh="远程 HTTP（推荐）"
+                data-en="Remote HTTP (recommended)">远程 HTTP（推荐）</span></div>
+            <div class="row"><span class="key">--transport stdio</span> <span class="desc" data-zh="本地进程"
+                data-en="Local process">本地进程</span></div>
+            <div class="row"><span class="key">--transport sse</span> <span class="desc" data-zh="远程 SSE"
+                data-en="Remote SSE">远程 SSE</span></div>
+            <div class="sub-header" data-zh="作用域" data-en="Scopes">作用域</div>
+            <div class="row"><span class="key">Local</span> <span class="desc" data-zh="settings.local.json（仅自己）"
+                data-en="settings.local.json (you only)">settings.local.json（仅自己）</span></div>
+            <div class="row"><span class="key">Project</span> <span class="desc" data-zh=".mcp.json（共享/版本控制）"
+                data-en=".mcp.json (shared/VCS)">.mcp.json（共享/版本控制）</span></div>
+            <div class="row"><span class="key">User</span> <span class="desc" data-zh="~/.claude.json（全局）"
+                data-en="~/.claude.json (global)">~/.claude.json（全局）</span></div>
+            <div class="sub-header" data-zh="管理" data-en="Manage">管理</div>
+            <div class="row"><span class="key">/mcp</span> <span class="desc" data-zh="交互式 UI"
+                data-en="Interactive UI">交互式 UI</span></div>
+            <div class="row"><span class="key">claude mcp list</span> <span class="desc" data-zh="列出所有服务器"
+                data-en="List all servers">列出所有服务器</span></div>
+            <div class="row"><span class="key">claude mcp serve</span> <span class="desc" data-zh="CC 作为 MCP 服务器"
+                data-en="CC as MCP server">CC 作为 MCP 服务器</span></div>
+            <div class="row"><span class="key">Elicitation</span> <span class="desc" data-zh="服务器在任务中请求输入"
+                data-en="Servers request input mid-task">服务器在任务中请求输入<span class="badge-new"
+                  data-added="2026-03-23">NEW</span></span></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- SLASH + MEMORY WRAPPER -->
+      <div class="section-slash-memory">
+        <!-- SLASH COMMANDS -->
+        <section class="section section-slash">
+          <div class="section-header" data-zh="⚡ 斜杠命令" data-en="⚡ Slash Commands">⚡ 斜杠命令</div>
+          <div class="section-content">
+            <div class="sub-header" data-zh="会话" data-en="Session">会话</div>
+            <div class="row"><span class="key">/clear</span> <span class="desc" data-zh="清除对话"
+                data-en="Clear conversation">清除对话</span></div>
+            <div class="row"><span class="key">/compact [focus]</span> <span class="desc" data-zh="压缩上下文"
+                data-en="Compact context">压缩上下文</span></div>
+            <div class="row"><span class="key">/resume</span> <span class="desc" data-zh="恢复/切换会话"
+                data-en="Resume/switch session">恢复/切换会话</span></div>
+            <div class="row"><span class="key">/rename [name]</span> <span class="desc" data-zh="命名当前会话"
+                data-en="Name current session">命名当前会话</span></div>
+            <div class="row"><span class="key">/branch [name]</span> <span class="desc" data-zh="分支对话（/fork 别名）"
+                data-en="Branch conversation (/fork alias)">分支对话（/fork 别名）</span></div>
+            <div class="row"><span class="key">/cost</span> <span class="desc" data-zh="Token 用量统计"
+                data-en="Token usage stats">Token 用量统计</span></div>
+            <div class="row"><span class="key">/context</span> <span class="desc" data-zh="可视化上下文（网格）"
+                data-en="Visualize context (grid)">可视化上下文（网格）</span></div>
+            <div class="row"><span class="key">/diff</span> <span class="desc" data-zh="交互式 diff 查看器"
+                data-en="Interactive diff viewer">交互式 diff 查看器</span></div>
+            <div class="row"><span class="key">/copy [N]</span> <span class="desc" data-zh="复制最后（或第 N 条）回复"
+                data-en="Copy last (or Nth) response">复制最后（或第 N 条）回复</span></div>
+            <div class="row"><span class="key">/rewind</span> <span class="desc" data-zh="回退对话 / 代码检查点"
+                data-en="Rewind conv / code checkpoint">回退对话 / 代码检查点</span></div>
+            <div class="row"><span class="key">/export</span> <span class="desc" data-zh="导出对话"
+                data-en="Export conversation">导出对话</span></div>
+
+            <div class="sub-header" data-zh="配置" data-en="Config">配置</div>
+            <div class="row"><span class="key">/config</span> <span class="desc" data-zh="打开设置"
+                data-en="Open settings">打开设置</span></div>
+            <div class="row"><span class="key">/model [model]</span> <span class="desc" data-zh="切换模型（←→ 调整 effort）"
+                data-en="Switch model (←→ effort)">切换模型（←→ 调整 effort）</span></div>
+            <div class="row"><span class="key">/fast [on|off]</span> <span class="desc" data-zh="切换快速模式"
+                data-en="Toggle fast mode">切换快速模式</span></div>
+            <div class="row"><span class="key">/vim</span> <span class="desc" data-zh="切换 vim 模式"
+                data-en="Toggle vim mode">切换 vim 模式</span></div>
+            <div class="row"><span class="key">/theme</span> <span class="desc" data-zh="更换颜色主题"
+                data-en="Change color theme">更换颜色主题</span></div>
+            <div class="row"><span class="key">/permissions</span> <span class="desc" data-zh="查看/更新权限"
+                data-en="View/update permissions">查看/更新权限</span></div>
+            <div class="row"><span class="key">/effort [level]</span> <span class="desc"
+                data-zh="设置 effort（low/med/high/max/auto）" data-en="Set effort (low/med/high/max/auto)">设置
+                effort（low/med/high/max/auto）<span class="badge-new" data-added="2026-03-23">NEW</span></span></div>
+            <div class="row"><span class="key">/color [color]</span> <span class="desc" data-zh="设置提示栏颜色"
+                data-en="Set prompt-bar color">设置提示栏颜色</span></div>
+            <div class="row"><span class="key">/keybindings</span> <span class="desc" data-zh="自定义键盘快捷键"
+                data-en="Customize keyboard shortcuts">自定义键盘快捷键</span></div>
+            <div class="row"><span class="key">/terminal-setup</span> <span class="desc" data-zh="配置终端键绑定"
+                data-en="Configure terminal keybindings">配置终端键绑定</span></div>
+
+            <div class="sub-header" data-zh="工具" data-en="Tools">工具</div>
+            <div class="row"><span class="key">/init</span> <span class="desc" data-zh="创建 CLAUDE.md"
+                data-en="Create CLAUDE.md">创建 CLAUDE.md</span></div>
+            <div class="row"><span class="key">/memory</span> <span class="desc" data-zh="编辑 CLAUDE.md 文件"
+                data-en="Edit CLAUDE.md files">编辑 CLAUDE.md 文件</span></div>
+            <div class="row"><span class="key">/mcp</span> <span class="desc" data-zh="管理 MCP 服务器"
+                data-en="Manage MCP servers">管理 MCP 服务器</span></div>
+            <div class="row"><span class="key">/hooks</span> <span class="desc" data-zh="管理 hooks"
+                data-en="Manage hooks">管理 hooks</span></div>
+            <div class="row"><span class="key">/skills</span> <span class="desc" data-zh="列出可用技能"
+                data-en="List available skills">列出可用技能</span></div>
+            <div class="row"><span class="key">/agents</span> <span class="desc" data-zh="管理代理"
+                data-en="Manage agents">管理代理</span></div>
+            <div class="row"><span class="key">/chrome</span> <span class="desc" data-zh="Chrome 集成"
+                data-en="Chrome integration">Chrome 集成</span></div>
+            <div class="row"><span class="key">/reload-plugins</span> <span class="desc" data-zh="热重载插件"
+                data-en="Hot-reload plugins">热重载插件</span></div>
+            <div class="row"><span class="key">/add-dir &lt;path&gt;</span> <span class="desc" data-zh="添加工作目录"
+                data-en="Add working directory">添加工作目录</span></div>
+
+            <div class="sub-header" data-zh="特殊" data-en="Special">特殊</div>
+            <div class="row"><span class="key">/btw &lt;question&gt;</span> <span class="desc" data-zh="附带问题（无上下文）"
+                data-en="Side question (no context)">附带问题（无上下文）</span></div>
+            <div class="row"><span class="key">/plan [desc]</span> <span class="desc" data-zh="计划模式（+ 自动启动）"
+                data-en="Plan mode (+ auto-start)">计划模式（+ 自动启动）</span></div>
+            <div class="row"><span class="key">/loop [interval]</span> <span class="desc" data-zh="调度循环任务"
+                data-en="Schedule recurring task">调度循环任务</span></div>
+            <div class="row"><span class="key">/voice</span> <span class="desc" data-zh="按键说话语音（20 种语言）"
+                data-en="Push-to-talk voice (20 langs)">按键说话语音（20 种语言）</span></div>
+            <div class="row"><span class="key">/doctor</span> <span class="desc" data-zh="诊断安装"
+                data-en="Diagnose installation">诊断安装</span></div>
+            <div class="row"><span class="key">/pr-comments [PR]</span> <span class="desc" data-zh="获取 GitHub PR 评论"
+                data-en="Fetch GitHub PR comments">获取 GitHub PR 评论</span></div>
+            <div class="row"><span class="key">/stats</span> <span class="desc" data-zh="使用统计与偏好"
+                data-en="Usage streaks & prefs">使用统计与偏好</span></div>
+            <div class="row"><span class="key">/insights</span> <span class="desc" data-zh="分析会话报告"
+                data-en="Analyze sessions report">分析会话报告</span></div>
+            <div class="row"><span class="key">/desktop</span> <span class="desc" data-zh="在桌面应用中继续"
+                data-en="Continue in Desktop app">在桌面应用中继续</span></div>
+            <div class="row"><span class="key">/remote-control</span> <span class="desc"
+                data-zh="桥接到 claude.ai/code（/rc）" data-en="Bridge to claude.ai/code (/rc)">桥接到 claude.ai/code（/rc）<span
+                  class="badge-new" data-added="2026-03-23">NEW</span></span></div>
+            <div class="row"><span class="key">/usage</span> <span class="desc" data-zh="计划限额与速率状态"
+                data-en="Plan limits & rate status">计划限额与速率状态</span></div>
+            <div class="row"><span class="key">/schedule</span> <span class="desc" data-zh="云端定时任务"
+                data-en="Cloud scheduled tasks">云端定时任务</span></div>
+            <div class="row"><span class="key">/security-review</span> <span class="desc" data-zh="变更安全分析"
+                data-en="Security analysis of changes">变更安全分析</span></div>
+            <div class="row"><span class="key">/help</span> <span class="desc" data-zh="显示帮助 + 命令"
+                data-en="Show help + commands">显示帮助 + 命令</span></div>
+            <div class="row"><span class="key">/feedback</span> <span class="desc" data-zh="提交反馈（别名: /bug）"
+                data-en="Submit feedback (alias: /bug)">提交反馈（别名: /bug）</span></div>
+            <div class="row"><span class="key">/release-notes</span> <span class="desc" data-zh="查看完整变更日志"
+                data-en="View full changelog">查看完整变更日志</span></div>
+            <div class="row"><span class="key">/stickers</span> <span class="desc" data-zh="订购贴纸！🎉"
+                data-en="Order stickers! 🎉">订购贴纸！🎉</span></div>
+          </div>
+        </section>
+        <!-- MEMORY & FILES -->
+        <section class="section section-memory">
+          <div class="section-header" data-zh="📁 记忆与文件" data-en="📁 Memory & Files">📁 记忆与文件</div>
+          <div class="section-content">
+            <div class="sub-header" data-zh="CLAUDE.md 位置" data-en="CLAUDE.md Locations">CLAUDE.md 位置</div>
+            <div class="row"><span class="key">./CLAUDE.md</span> <span class="desc" data-zh="项目级（团队共享）"
+                data-en="Project (team-shared)">项目级（团队共享）</span></div>
+            <div class="row"><span class="key">~/.claude/CLAUDE.md</span> <span class="desc" data-zh="个人级（所有项目）"
+                data-en="Personal (all projects)">个人级（所有项目）</span></div>
+            <div class="row"><span class="key">/etc/claude-code/</span> <span class="desc" data-zh="托管级（组织全局）"
+                data-en="Managed (org-wide)">托管级（组织全局）</span></div>
+            <div class="sub-header" data-zh="规则与导入" data-en="Rules & Import">规则与导入</div>
+            <div class="row"><span class="key">.claude/rules/*.md</span> <span class="desc" data-zh="项目规则"
+                data-en="Project rules">项目规则</span></div>
+            <div class="row"><span class="key">~/.claude/rules/*.md</span> <span class="desc" data-zh="用户规则"
+                data-en="User rules">用户规则</span></div>
+            <div class="row"><span class="key">paths: frontmatter</span> <span class="desc" data-zh="路径专用规则"
+                data-en="Path-specific rules">路径专用规则</span></div>
+            <div class="row"><span class="key">@path/to/file</span> <span class="desc" data-zh="在 CLAUDE.md 中导入"
+                data-en="Import in CLAUDE.md">在 CLAUDE.md 中导入</span></div>
+            <div class="sub-header" data-zh="自动记忆" data-en="Auto Memory">自动记忆</div>
+            <div class="row"><span class="key">~/.claude/projects/&lt;proj&gt;/memory/</span></div>
+            <div class="row"><span class="desc" data-zh="MEMORY.md + 主题文件，自动加载"
+                data-en="MEMORY.md + topic files, auto-loaded">MEMORY.md + 主题文件，自动加载</span></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- WORKFLOWS + CONFIG WRAPPER -->
+      <div class="section-workflows-config">
+        <!-- WORKFLOWS & TIPS -->
+        <section class="section section-workflows">
+          <div class="section-header" data-zh="🧠 工作流与技巧" data-en="🧠 Workflows & Tips">🧠 工作流与技巧</div>
+          <div class="section-content">
+            <div class="sub-header" data-zh="计划模式" data-en="Plan Mode">计划模式</div>
+            <div class="row"><span class="key"><span class="keycap">Shift</span><span class="keycap">Tab</span></span>
+              <span class="desc" data-zh="普通 → 自动接受 → 计划" data-en="Normal → Auto-Accept → Plan">普通 → 自动接受 → 计划</span>
+            </div>
+            <div class="row"><span class="key">--permission-mode plan</span> <span class="desc" data-zh="以计划模式启动"
+                data-en="Start in plan mode">以计划模式启动</span></div>
+            <div class="sub-header" data-zh="思考与 Effort" data-en="Thinking & Effort">思考与 Effort</div>
+            <div class="row"><span class="key"><span class="keycap">Alt</span><span class="keycap">T</span></span> <span
+                class="desc" data-zh="开启/关闭思考" data-en="Toggle thinking on/off">开启/关闭思考</span></div>
+            <div class="row"><span class="key">"ultrathink"</span> <span class="desc" data-zh="本轮最大 effort"
+                data-en="Max effort for turn">本轮最大 effort</span></div>
+            <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">O</span></span>
+              <span class="desc" data-zh="查看思考（详细模式）" data-en="See thinking (verbose)">查看思考（详细模式）</span>
+            </div>
+            <div class="row"><span class="key">/effort</span> <span class="desc" data-zh="○ low · ◐ med · ● high"
+                data-en="○ low · ◐ med · ● high">○ low · ◐ med · ● high<span class="badge-new"
+                  data-added="2026-03-23">NEW</span></span></div>
+            <div class="sub-header" data-zh="Git Worktrees" data-en="Git Worktrees">Git Worktrees</div>
+            <div class="row"><span class="key">--worktree name</span> <span class="desc" data-zh="每个功能独立分支"
+                data-en="Isolated branch per feature">每个功能独立分支</span></div>
+            <div class="row"><span class="key">isolation: worktree</span> <span class="desc"
+                data-zh="代理在自己的 worktree 中运行" data-en="Agent in own worktree">代理在自己的 worktree 中运行</span></div>
+            <div class="row"><span class="key">sparsePaths</span> <span class="desc" data-zh="仅检出需要的目录"
+                data-en="Checkout only needed dirs">仅检出需要的目录<span class="badge-new"
+                  data-added="2026-03-23">NEW</span></span></div>
+            <div class="row"><span class="key">/batch</span> <span class="desc" data-zh="自动创建 worktrees"
+                data-en="Auto-creates worktrees">自动创建 worktrees</span></div>
+            <div class="sub-header" data-zh="语音模式" data-en="Voice Mode">语音模式</div>
+            <div class="row"><span class="key">/voice</span> <span class="desc" data-zh="启用按键说话"
+                data-en="Enable push-to-talk">启用按键说话</span></div>
+            <div class="row"><span class="key"><span class="keycap">Space</span> (hold)</span> <span class="desc"
+                data-zh="按住录音，松开发送" data-en="Record, release to send">按住录音，松开发送</span></div>
+            <div class="row"><span class="key" data-zh="20 种语言" data-en="20 languages">20 种语言</span> <span class="desc"
+                data-zh="EN, ES, FR, DE, CZ, PL…" data-en="EN, ES, FR, DE, CZ, PL…">EN, ES, FR, DE, CZ, PL…</span></div>
+            <div class="sub-header" data-zh="上下文管理" data-en="Context Management">上下文管理</div>
+            <div class="row"><span class="key">/context</span> <span class="desc" data-zh="用量 + 优化建议"
+                data-en="Usage + optimization tips">用量 + 优化建议</span></div>
+            <div class="row"><span class="key">/compact [focus]</span> <span class="desc" data-zh="带焦点压缩"
+                data-en="Compress with focus">带焦点压缩</span></div>
+            <div class="row"><span class="key" data-zh="自动压缩" data-en="Auto-compact">自动压缩</span> <span class="desc"
+                data-zh="~95% 容量时触发" data-en="~95% capacity">~95% 容量时触发</span></div>
+            <div class="row"><span class="key" data-zh="1M 上下文" data-en="1M context">1M 上下文</span> <span class="desc"
+                data-zh="Opus 4.6（Max/Team/Ent）" data-en="Opus 4.6 (Max/Team/Ent)">Opus 4.6（Max/Team/Ent）</span></div>
+            <div class="row"><span class="key">CLAUDE.md</span> <span class="desc" data-zh="压缩后仍保留！"
+                data-en="Survives compaction!">压缩后仍保留！</span></div>
+            <div class="sub-header" data-zh="会话进阶" data-en="Session Power Moves">会话进阶</div>
+            <div class="row"><span class="key">claude -c</span> <span class="desc" data-zh="继续上次对话"
+                data-en="Continue last conv">继续上次对话</span></div>
+            <div class="row"><span class="key">claude -r "name"</span> <span class="desc" data-zh="按名称恢复"
+                data-en="Resume by name">按名称恢复</span></div>
+            <div class="row"><span class="key">/btw question</span> <span class="desc" data-zh="附带问题，不消耗上下文"
+                data-en="Side Q, no context cost">附带问题，不消耗上下文</span></div>
+            <div class="sub-header" data-zh="SDK / 无头模式" data-en="SDK / Headless">SDK / 无头模式</div>
+            <div class="row"><span class="key">claude -p "query"</span> <span class="desc" data-zh="非交互式"
+                data-en="Non-interactive">非交互式</span></div>
+            <div class="row"><span class="key">--output-format json</span> <span class="desc" data-zh="结构化输出"
+                data-en="Structured output">结构化输出</span></div>
+            <div class="row"><span class="key">--max-budget-usd 5</span> <span class="desc" data-zh="费用上限"
+                data-en="Cost cap">费用上限</span></div>
+            <div class="row"><span class="key">cat file | claude -p</span> <span class="desc" data-zh="管道输入"
+                data-en="Pipe input">管道输入</span></div>
+            <div class="sub-header" data-zh="调度与远程" data-en="Scheduling & Remote">调度与远程</div>
+            <div class="row"><span class="key">/loop 5m msg</span> <span class="desc" data-zh="循环任务"
+                data-en="Recurring task">循环任务</span></div>
+            <div class="row"><span class="key">/rc</span> <span class="desc" data-zh="远程控制"
+                data-en="Remote control">远程控制</span></div>
+            <div class="row"><span class="key">--remote</span> <span class="desc" data-zh="在 claude.ai 上的 Web 会话"
+                data-en="Web session on claude.ai">在 claude.ai 上的 Web 会话</span></div>
+          </div>
+        </section>
+        <!-- CONFIG & ENV -->
+        <section class="section section-config">
+          <div class="section-header" data-zh="⚙️ 配置与环境" data-en="⚙️ Config & Env">⚙️ 配置与环境</div>
+          <div class="section-content">
+            <div class="sub-header" data-zh="配置文件" data-en="Config Files">配置文件</div>
+            <div class="row"><span class="key">~/.claude/settings.json</span> <span class="desc" data-zh="用户设置"
+                data-en="User settings">用户设置</span></div>
+            <div class="row"><span class="key">.claude/settings.json</span> <span class="desc" data-zh="项目设置（共享）"
+                data-en="Project (shared)">项目设置（共享）</span></div>
+            <div class="row"><span class="key">.claude/settings.local.json</span> <span class="desc" data-zh="仅本地"
+                data-en="Local only">仅本地</span></div>
+            <div class="row"><span class="key">~/.claude.json</span> <span class="desc" data-zh="OAuth, MCP, 状态"
+                data-en="OAuth, MCP, state">OAuth, MCP, 状态</span></div>
+            <div class="row"><span class="key">.mcp.json</span> <span class="desc" data-zh="项目 MCP 服务器"
+                data-en="Project MCP servers">项目 MCP 服务器</span></div>
+            <div class="sub-header" data-zh="关键设置" data-en="Key Settings">关键设置</div>
+            <div class="row"><span class="key">modelOverrides</span> <span class="desc" data-zh="映射模型选择器 → 自定义 ID"
+                data-en="Map model picker → custom IDs">映射模型选择器 → 自定义 ID</span></div>
+            <div class="row"><span class="key">autoMemoryDirectory</span> <span class="desc" data-zh="自定义记忆目录"
+                data-en="Custom memory dir">自定义记忆目录</span></div>
+            <div class="row"><span class="key">worktree.sparsePaths</span> <span class="desc" data-zh="稀疏检出目录"
+                data-en="Sparse checkout dirs">稀疏检出目录<span class="badge-new" data-added="2026-03-23">NEW</span></span>
+            </div>
+            <div class="sub-header" data-zh="关键环境变量" data-en="Key Env Vars">关键环境变量</div>
+            <div class="row"><span class="key">ANTHROPIC_API_KEY</span></div>
+            <div class="row"><span class="key">ANTHROPIC_MODEL</span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_EFFORT_LEVEL</span> <span class="desc">low/med/high</span>
+            </div>
+            <div class="row"><span class="key">MAX_THINKING_TOKENS</span> <span class="desc" data-zh="0=关闭"
+                data-en="0=off">0=关闭</span></div>
+            <div class="row"><span class="key">ANTHROPIC_CUSTOM_MODEL_OPTION</span> <span class="desc"
+                data-zh="自定义 /model 条目" data-en="Custom /model entry">自定义 /model 条目</span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_PLUGIN_SEED_DIR</span> <span class="desc" data-zh="多插件种子目录"
+                data-en="Multiple plugin seed dirs">多插件种子目录</span></div>
+            <div class="row"><span class="key">CLAUDECODE</span> <span class="desc" data-zh="检测 CC shell (=1)"
+                data-en="Detect CC shell (=1)">检测 CC shell (=1)</span></div>
+            <div class="row"><span class="key">IS_DEMO</span> <span class="desc" data-zh="演示模式（隐藏邮箱/组织）"
+                data-en="Demo mode (hide email/org)">演示模式（隐藏邮箱/组织）</span></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- SKILLS + CLI WRAPPER -->
+      <div class="section-skills-cli">
+        <!-- SKILLS & AGENTS -->
+        <section class="section section-skills">
+          <div class="section-header" data-zh="🔧 技能与代理" data-en="🔧 Skills & Agents">🔧 技能与代理</div>
+          <div class="section-content">
+            <div class="sub-header" data-zh="内置技能" data-en="Built-in Skills">内置技能</div>
+            <div class="row"><span class="key">/simplify</span> <span class="desc" data-zh="代码审查（3 个并行代理）"
+                data-en="Code review (3 parallel agents)">代码审查（3 个并行代理）</span></div>
+            <div class="row"><span class="key">/batch</span> <span class="desc" data-zh="大规模并行变更（5-30 worktrees）"
+                data-en="Large parallel changes (5-30 worktrees)">大规模并行变更（5-30 worktrees）</span></div>
+            <div class="row"><span class="key">/debug [desc]</span> <span class="desc" data-zh="从调试日志排查问题"
+                data-en="Troubleshoot from debug log">从调试日志排查问题</span></div>
+            <div class="row"><span class="key">/loop [interval]</span> <span class="desc" data-zh="循环调度任务"
+                data-en="Recurring scheduled task">循环调度任务</span></div>
+            <div class="row"><span class="key">/claude-api</span> <span class="desc" data-zh="加载 API + SDK 参考"
+                data-en="Load API + SDK reference">加载 API + SDK 参考</span></div>
+
+            <div class="sub-header" data-zh="自定义技能位置" data-en="Custom Skill Locations">自定义技能位置</div>
+            <div class="row"><span class="key">.claude/skills/&lt;name&gt;/</span> <span class="desc" data-zh="项目技能"
+                data-en="Project skills">项目技能</span></div>
+            <div class="row"><span class="key">~/.claude/skills/&lt;name&gt;/</span> <span class="desc" data-zh="个人技能"
+                data-en="Personal skills">个人技能</span></div>
+
+            <div class="sub-header" data-zh="技能 Frontmatter" data-en="Skill Frontmatter">技能 Frontmatter</div>
+            <div class="row"><span class="key">description</span> <span class="desc" data-zh="自动调用触发器"
+                data-en="Auto-invocation trigger">自动调用触发器</span></div>
+            <div class="row"><span class="key">allowed-tools</span> <span class="desc" data-zh="跳过权限提示"
+                data-en="Skip permission prompts">跳过权限提示</span></div>
+            <div class="row"><span class="key">model</span> <span class="desc" data-zh="覆盖技能模型"
+                data-en="Override model for skill">覆盖技能模型</span></div>
+            <div class="row"><span class="key">effort</span> <span class="desc" data-zh="覆盖 effort 级别"
+                data-en="Override effort level">覆盖 effort 级别<span class="badge-new"
+                  data-added="2026-03-23">NEW</span></span></div>
+            <div class="row"><span class="key">context: fork</span> <span class="desc" data-zh="在子代理中运行"
+                data-en="Run in subagent">在子代理中运行</span></div>
+            <div class="row"><span class="key">$ARGUMENTS</span> <span class="desc" data-zh="用户输入占位符"
+                data-en="User input placeholder">用户输入占位符</span></div>
+            <div class="row"><span class="key">${CLAUDE_SKILL_DIR}</span> <span class="desc" data-zh="技能自身目录"
+                data-en="Skill's own directory">技能自身目录</span></div>
+            <div class="row"><span class="key">!`cmd`</span> <span class="desc" data-zh="动态上下文注入"
+                data-en="Dynamic context injection">动态上下文注入</span></div>
+
+            <div class="sub-header" data-zh="内置代理" data-en="Built-in Agents">内置代理</div>
+            <div class="row"><span class="key">Explore</span> <span class="desc" data-zh="快速只读（Haiku）"
+                data-en="Fast read-only (Haiku)">快速只读（Haiku）</span></div>
+            <div class="row"><span class="key">Plan</span> <span class="desc" data-zh="为计划模式做研究"
+                data-en="Research for plan mode">为计划模式做研究</span></div>
+            <div class="row"><span class="key">General</span> <span class="desc" data-zh="全工具，复杂任务"
+                data-en="Full tools, complex tasks">全工具，复杂任务</span></div>
+            <div class="row"><span class="key">Bash</span> <span class="desc" data-zh="终端独立上下文"
+                data-en="Terminal separate context">终端独立上下文</span></div>
+
+            <div class="sub-header" data-zh="代理 Frontmatter" data-en="Agent Frontmatter">代理 Frontmatter</div>
+            <div class="row"><span class="key">permissionMode</span> <span
+                class="desc">default/acceptEdits/plan/dontAsk/bypass</span></div>
+            <div class="row"><span class="key">isolation: worktree</span> <span class="desc"
+                data-zh="在 git worktree 中运行" data-en="Run in git worktree">在 git worktree 中运行</span></div>
+            <div class="row"><span class="key">memory: user|project</span> <span class="desc" data-zh="持久化记忆"
+                data-en="Persistent memory">持久化记忆</span></div>
+            <div class="row"><span class="key">background: true</span> <span class="desc" data-zh="后台任务"
+                data-en="Background task">后台任务</span></div>
+            <div class="row"><span class="key">maxTurns</span> <span class="desc" data-zh="限制代理轮次"
+                data-en="Limit agentic turns">限制代理轮次</span></div>
+            <div class="row"><span class="key">SendMessage</span> <span class="desc" data-zh="恢复代理（替代 resume）"
+                data-en="Resume agents (replaces resume)">恢复代理（替代 resume）<span class="badge-new"
+                  data-added="2026-03-23">NEW</span></span></div>
+          </div>
+        </section>
+
+        <!-- CLI COMMANDS & FLAGS -->
+        <section class="section section-cli">
+          <div class="section-header" data-zh="🖥️ CLI 与标志" data-en="🖥️ CLI & Flags">🖥️ CLI 与标志</div>
+          <div class="section-content">
+            <div class="sub-header" data-zh="核心命令" data-en="Core Commands">核心命令</div>
+            <div class="row"><span class="key">claude</span> <span class="desc" data-zh="交互式"
+                data-en="Interactive">交互式</span></div>
+            <div class="row"><span class="key">claude "q"</span> <span class="desc" data-zh="带提示"
+                data-en="With prompt">带提示</span></div>
+            <div class="row"><span class="key">claude -p "q"</span> <span class="desc" data-zh="无头模式"
+                data-en="Headless">无头模式</span></div>
+            <div class="row"><span class="key">claude -c</span> <span class="desc" data-zh="继续上次"
+                data-en="Continue last">继续上次</span></div>
+            <div class="row"><span class="key">claude -r "n"</span> <span class="desc" data-zh="恢复"
+                data-en="Resume">恢复</span></div>
+            <div class="row"><span class="key">claude update</span> <span class="desc" data-zh="更新"
+                data-en="Update">更新</span></div>
+            <div class="sub-header" data-zh="关键标志" data-en="Key Flags">关键标志</div>
+            <div class="row"><span class="key">--model</span> <span class="desc" data-zh="设置模型"
+                data-en="Set model">设置模型</span></div>
+            <div class="row"><span class="key">-w</span> <span class="desc" data-zh="Git worktree"
+                data-en="Git worktree">Git worktree</span></div>
+            <div class="row"><span class="key">-n / --name</span> <span class="desc" data-zh="会话名称"
+                data-en="Session name">会话名称</span></div>
+            <div class="row"><span class="key">--add-dir</span> <span class="desc" data-zh="添加目录"
+                data-en="Add dir">添加目录</span></div>
+            <div class="row"><span class="key">--agent</span> <span class="desc" data-zh="使用代理"
+                data-en="Use agent">使用代理</span></div>
+            <div class="row"><span class="key">--allowedTools</span> <span class="desc" data-zh="预批准"
+                data-en="Pre-approve">预批准</span></div>
+            <div class="row"><span class="key">--output-format</span> <span class="desc">json/stream</span></div>
+            <div class="row"><span class="key">--json-schema</span> <span class="desc" data-zh="结构化"
+                data-en="Structured">结构化</span></div>
+            <div class="row"><span class="key">--max-turns</span> <span class="desc" data-zh="限制轮次"
+                data-en="Limit turns">限制轮次</span></div>
+            <div class="row"><span class="key">--max-budget-usd</span> <span class="desc" data-zh="费用上限"
+                data-en="Cost cap">费用上限</span></div>
+            <div class="row"><span class="key">--console</span> <span class="desc" data-zh="通过 Anthropic Console 认证"
+                data-en="Auth via Anthropic Console">通过 Anthropic Console 认证</span></div>
+            <div class="row"><span class="key">--verbose</span> <span class="desc" data-zh="详细输出"
+                data-en="Verbose">详细输出</span></div>
+            <div class="row"><span class="key">--bare</span> <span class="desc" data-zh="最小无头模式（无 hooks/LSP）"
+                data-en="Minimal headless (no hooks/LSP)">最小无头模式（无 hooks/LSP）<span class="badge-new"
+                  data-added="2026-03-23">NEW</span></span></div>
+            <div class="row"><span class="key">--channels</span> <span class="desc" data-zh="权限中继 / MCP 推送"
+                data-en="Permission relay / MCP push">权限中继 / MCP 推送<span class="badge-new"
+                  data-added="2026-03-23">NEW</span></span></div>
+            <div class="row"><span class="key">--remote</span> <span class="desc" data-zh="Web 会话"
+                data-en="Web session">Web 会话</span></div>
+            <div class="row"><span class="key">--effort</span> <span class="desc">low/med/high/max</span></div>
+            <div class="row"><span class="key">--permission-mode</span> <span class="desc">plan/default/…</span></div>
+            <div class="row"><span class="key">--dangerously-skip-permissions</span> <span class="desc"
+                data-zh="跳过所有提示 ⚠️" data-en="Skip all prompts ⚠️">跳过所有提示 ⚠️</span></div>
+            <div class="row"><span class="key">--chrome</span> <span class="desc">Chrome</span></div>
+          </div>
+        </section>
+      </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-row">
+        <span class="footer-label" data-zh="权限模式:" data-en="Permission Modes:">权限模式:</span>
+        <span class="footer-item"><code>default</code> <span data-zh="提示" data-en="prompts">提示</span></span>
+        <span class="footer-sep">·</span>
+        <span class="footer-item"><code>acceptEdits</code> <span data-zh="自动接受编辑"
+            data-en="auto-accept edits">自动接受编辑</span></span>
+        <span class="footer-sep">·</span>
+        <span class="footer-item"><code>plan</code> <span data-zh="只读" data-en="read-only">只读</span></span>
+        <span class="footer-sep">·</span>
+        <span class="footer-item"><code>dontAsk</code> <span data-zh="未允许则拒绝"
+            data-en="deny unless allowed">未允许则拒绝</span></span>
+        <span class="footer-sep">·</span>
+        <span class="footer-item"><code>bypassPermissions</code> <span data-zh="跳过所有"
+            data-en="skip all">跳过所有</span></span>
+        <span class="footer-sep">·</span>
+        <span class="footer-item"><code>--dangerously-skip-permissions</code> <span data-zh="CLI 标志"
+            data-en="CLI flag">CLI 标志</span></span>
+      </div>
+      <div class="footer-row">
+        <span class="footer-label" data-zh="关键环境变量:" data-en="Key Env Vars:">关键环境变量:</span>
+        <span class="footer-item"><code>ANTHROPIC_API_KEY</code></span>
+        <span class="footer-sep">·</span>
+        <span class="footer-item"><code>ANTHROPIC_MODEL</code></span>
+        <span class="footer-sep">·</span>
+        <span class="footer-item"><code>CLAUDE_CODE_EFFORT_LEVEL</code> (low/med/high)</span>
+        <span class="footer-sep">·</span>
+        <span class="footer-item"><code>MAX_THINKING_TOKENS</code> (<span data-zh="0=关闭"
+            data-en="0=off">0=关闭</span>)</span>
+        <span class="footer-sep">·</span>
+        <span class="footer-item"><code>CLAUDE_CODE_MAX_OUTPUT_TOKENS</code> (<span data-zh="默认 32K"
+            data-en="def 32K">默认 32K</span>)</span>
+        <span class="footer-sep">·</span>
+        <span class="footer-item"><code>CLAUDE_CODE_DISABLE_CRON</code></span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- OS Toggle Script -->
+  <script>
+    (function () {
+      var toggle = document.getElementById('osToggle');
+      var btns = toggle.querySelectorAll('.os-btn');
+      function detectOS() {
+        var p = navigator.platform || '';
+        var ua = navigator.userAgent || '';
+        if (/Mac|iPhone|iPod|iPad/.test(p) || /Mac/.test(ua)) return 'mac';
+        return 'win';
+      }
+      if (localStorage.getItem('cc-os') && !localStorage.getItem('cc-os-manual')) {
+        localStorage.removeItem('cc-os');
+      }
+      var saved = localStorage.getItem('cc-os') || detectOS();
+
+      function apply(os) {
+        btns.forEach(function (b) { b.classList.toggle('active', b.dataset.os === os); });
+        var allKeycaps = document.querySelectorAll('.keycap');
+        allKeycaps.forEach(function (keycap) {
+          var text = keycap.textContent.trim();
+          if (text === 'Alt' || text === '⌥') {
+            keycap.textContent = (os === 'mac') ? '⌥' : 'Alt';
+          } else if (text === 'Shift' || text === '⇧') {
+            keycap.textContent = (os === 'mac') ? '⇧' : 'Shift';
+          }
+        });
+        localStorage.setItem('cc-os', os);
+      }
+
+      btns.forEach(function (btn) {
+        btn.addEventListener('click', function () { localStorage.setItem('cc-os-manual', '1'); apply(btn.dataset.os); });
+      });
+
+      apply(saved);
+    })();
+  </script>
+
+  <!-- Language Toggle Script -->
+  <script>
+    (function () {
+      var langToggle = document.getElementById('langToggle');
+      var langBtns = langToggle.querySelectorAll('.lang-btn');
+      var savedLang = localStorage.getItem('cc-lang') || 'zh';
+
+      function setLang(lang) {
+        document.querySelectorAll('[data-zh][data-en]').forEach(function (el) {
+          // Preserve child elements like badges and code tags
+          var badge = el.querySelector('.badge-new');
+          var text = el.getAttribute('data-' + lang);
+          if (badge) {
+            el.childNodes.forEach(function (node) {
+              if (node.nodeType === 3) { // Text node
+                node.textContent = '';
+              }
+            });
+            // Insert text before badge
+            el.insertBefore(document.createTextNode(text), badge);
+          } else {
+            el.textContent = text;
+          }
+        });
+
+        // Update changelog list items (they contain <code> tags)
+        document.querySelectorAll('.changelog-list li[data-zh][data-en]').forEach(function (li) {
+          li.innerHTML = li.getAttribute('data-' + lang);
+        });
+
+        // Update page title
+        document.title = (lang === 'zh') ? 'Claude Code 速查表' : 'Claude Code Cheat Sheet';
+
+        // Update html lang attribute
+        document.documentElement.lang = (lang === 'zh') ? 'zh-CN' : 'en';
+
+        langBtns.forEach(function (b) { b.classList.toggle('active', b.dataset.lang === lang); });
+        localStorage.setItem('cc-lang', lang);
+      }
+
+      langBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () { setLang(btn.dataset.lang); });
+      });
+
+      setLang(savedLang);
+    })();
+  </script>
+
+  <!-- NEW badges: auto-hidden after 14 days -->
+  <script>
+    (function () {
+      var now = new Date();
+      document.querySelectorAll('.badge-new[data-added]').forEach(function (el) {
+        var added = new Date(el.getAttribute('data-added'));
+        if ((now - added) / 86400000 > 14) el.style.display = 'none';
+      });
+    })();
+  </script>
+</body>
+
+</html>
