@@ -1539,14 +1539,16 @@
         page.style.cssText = 'width:1920px; max-width:1920px;';
         document.body.style.overflow = 'visible';
 
+        var actualHeight = page.scrollHeight;
+
         html2canvas(page, {
           scale: 2,
           useCORS: true,
           backgroundColor: '#ffffff',
           width: 1920,
-          height: 1080,
+          height: actualHeight,
           windowWidth: 1920,
-          windowHeight: 1080,
+          windowHeight: actualHeight,
           logging: false
         }).then(function (canvas) {
           page.style.cssText = savedCssText;
