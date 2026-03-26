@@ -695,6 +695,49 @@
         grid-template-columns: 1fr;
       }
     }
+
+    /* === WALLPAPER MODE === */
+    .wallpaper-btn {
+      background: #fff;
+      border: 1px solid #9CA3AF;
+      border-radius: 5px;
+      padding: 3px 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      color: #6B7280;
+      transition: background 0.15s, color 0.15s;
+      line-height: 1;
+    }
+    .wallpaper-btn:hover { background: #F3F4F6; }
+    .wallpaper-btn.active { background: #111827; color: #fff; border-color: #111827; }
+
+    .wallpaper-exit-hint {
+      position: fixed;
+      bottom: 12px;
+      right: 12px;
+      background: rgba(0, 0, 0, 0.65);
+      color: #fff;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      cursor: pointer;
+      display: none;
+      z-index: 9999;
+      user-select: none;
+    }
+    .wallpaper-exit-hint:hover { background: rgba(0, 0, 0, 0.85); }
+
+    body[data-wallpaper] {
+      overflow: hidden;
+      background: #fff;
+    }
+    body[data-wallpaper] .wallpaper-exit-hint { display: block; }
+    body[data-wallpaper] .changelog { display: none !important; }
+    body[data-wallpaper] .os-toggle { display: none !important; }
+    body[data-wallpaper] .lang-toggle { display: none !important; }
+    body[data-wallpaper] .wallpaper-btn { display: none !important; }
+    body[data-wallpaper] .header-meta { display: none !important; }
+    body[data-wallpaper] .header h1 { font-size: 1.6rem; }
   </style>
 </head>
 
@@ -720,6 +763,18 @@
           <button class="lang-btn active" data-lang="zh" title="中文">中</button>
           <button class="lang-btn" data-lang="en" title="English">EN</button>
         </div>
+        <button class="wallpaper-btn" id="wallpaperBtn" title="横屏模式 / Landscape Mode">
+          <!-- 横屏图标（默认）-->
+          <svg class="icon-landscape" width="18" height="13" viewBox="0 0 18 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="0.75" y="0.75" width="16.5" height="11.5" rx="1.5"/>
+            <line x1="0.75" y1="3.5" x2="17.25" y2="3.5"/>
+          </svg>
+          <!-- 竖屏图标（壁纸模式激活时）-->
+          <svg class="icon-portrait" width="11" height="17" viewBox="0 0 11 17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+            <rect x="0.75" y="0.75" width="9.5" height="15.5" rx="1.5"/>
+            <line x1="0.75" y1="3.5" x2="10.25" y2="3.5"/>
+          </svg>
+        </button>
         <div class="header-meta">
           <span class="version-info">Claude Code v2.1.83</span>
           <span class="last-updated" data-zh="最后更新: 2026年3月25日" data-en="Last updated: March 25, 2026">最后更新:
@@ -1346,7 +1401,7 @@
     (function () {
       var langToggle = document.getElementById('langToggle');
       var langBtns = langToggle.querySelectorAll('.lang-btn');
-      var savedLang = localStorage.getItem('cc-lang') || 'zh';
+      var savedLang = 'zh';
 
       function setLang(lang) {
         document.querySelectorAll('[data-zh][data-en]').forEach(function (el) {
@@ -1386,6 +1441,68 @@
       });
 
       setLang(savedLang);
+    })();
+  </script>
+
+  <!-- Wallpaper exit hint -->
+  <div class="wallpaper-exit-hint" id="wallpaperExitHint">退出横屏模式 (Esc)</div>
+
+  <!-- Wallpaper Mode Script -->
+  <script>
+    (function () {
+      var btn = document.getElementById('wallpaperBtn');
+      var page = document.querySelector('.page');
+      var hint = document.getElementById('wallpaperExitHint');
+      var iconLandscape = btn.querySelector('.icon-landscape');
+      var iconPortrait = btn.querySelector('.icon-portrait');
+      var W = 1920, H = 1080;
+
+      function applyScale() {
+        var scaleX = window.innerWidth / W;
+        var scaleY = window.innerHeight / H;
+        var scale = Math.min(scaleX, scaleY);
+        var offsetX = (window.innerWidth - W * scale) / 2;
+        var offsetY = (window.innerHeight - H * scale) / 2;
+        page.style.transform = 'translate(' + offsetX + 'px, ' + offsetY + 'px) scale(' + scale + ')';
+        page.style.transformOrigin = 'top left';
+        page.style.position = 'fixed';
+        page.style.top = '0';
+        page.style.left = '0';
+        page.style.width = W + 'px';
+        page.style.maxWidth = W + 'px';
+      }
+
+      function clearScale() {
+        page.style.cssText = '';
+      }
+
+      function enterWallpaper() {
+        document.body.setAttribute('data-wallpaper', '1');
+        btn.classList.add('active');
+        iconLandscape.style.display = 'none';
+        iconPortrait.style.display = '';
+        applyScale();
+        window.addEventListener('resize', applyScale);
+      }
+
+      function exitWallpaper() {
+        document.body.removeAttribute('data-wallpaper');
+        btn.classList.remove('active');
+        iconLandscape.style.display = '';
+        iconPortrait.style.display = 'none';
+        clearScale();
+        window.removeEventListener('resize', applyScale);
+      }
+
+      btn.addEventListener('click', function () {
+        document.body.hasAttribute('data-wallpaper') ? exitWallpaper() : enterWallpaper();
+      });
+
+      hint.addEventListener('click', exitWallpaper);
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && document.body.hasAttribute('data-wallpaper')) exitWallpaper();
+      });
     })();
   </script>
 
