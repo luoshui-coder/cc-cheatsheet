@@ -712,18 +712,16 @@
     .wallpaper-btn.active { background: #111827; color: #fff; border-color: #111827; }
 
     .wallpaper-exit-hint {
-      position: fixed;
-      bottom: 12px;
-      right: 12px;
       background: rgba(0, 0, 0, 0.65);
       color: #fff;
-      padding: 5px 12px;
+      padding: 4px 10px;
       border-radius: 20px;
       font-size: 0.7rem;
       cursor: pointer;
       display: none;
-      z-index: 9999;
       user-select: none;
+      border: none;
+      white-space: nowrap;
     }
     .wallpaper-exit-hint:hover { background: rgba(0, 0, 0, 0.85); }
 
@@ -731,7 +729,7 @@
       overflow: hidden;
       background: #fff;
     }
-    body[data-wallpaper] .wallpaper-exit-hint { display: block; }
+    body[data-wallpaper] .wallpaper-exit-hint { display: inline-flex; align-items: center; }
     body[data-wallpaper] .changelog { display: none !important; }
     body[data-wallpaper] .os-toggle { display: none !important; }
     body[data-wallpaper] .lang-toggle { display: none !important; }
@@ -741,24 +739,21 @@
 
     /* === EXPORT PNG BUTTON === */
     .export-btn {
-      position: fixed;
-      bottom: 12px;
-      left: 12px;
       background: #2563EB;
       color: #fff;
       border: none;
-      padding: 5px 14px;
+      padding: 4px 10px;
       border-radius: 20px;
       font-size: 0.7rem;
       font-family: var(--font-sans);
       cursor: pointer;
       display: none;
-      z-index: 9999;
       transition: background 0.15s;
+      white-space: nowrap;
     }
     .export-btn:hover { background: #1D4ED8; }
     .export-btn:disabled { background: #6B7280; cursor: wait; }
-    body[data-wallpaper] .export-btn { display: block; }
+    body[data-wallpaper] .export-btn { display: inline-flex; align-items: center; }
   </style>
 </head>
 
@@ -801,6 +796,8 @@
           <span class="last-updated" data-zh="最后更新: 2026年3月25日" data-en="Last updated: March 25, 2026">最后更新:
             2026年3月25日</span>
         </div>
+        <button class="export-btn" id="exportBtn">⬇ 导出 PNG</button>
+        <div class="wallpaper-exit-hint" id="wallpaperExitHint">退出横屏模式 (Esc)</div>
       </div>
     </header>
 
@@ -1464,10 +1461,6 @@
       setLang(savedLang);
     })();
   </script>
-
-  <!-- Wallpaper exit hint -->
-  <div class="wallpaper-exit-hint" id="wallpaperExitHint">退出横屏模式 (Esc)</div>
-  <button class="export-btn" id="exportBtn">⬇ 导出 PNG</button>
 
   <!-- Wallpaper Mode Script -->
   <script>
