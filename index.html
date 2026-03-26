@@ -738,6 +738,27 @@
     body[data-wallpaper] .wallpaper-btn { display: none !important; }
     body[data-wallpaper] .header-meta { display: none !important; }
     body[data-wallpaper] .header h1 { font-size: 1.6rem; }
+
+    /* === EXPORT PNG BUTTON === */
+    .export-btn {
+      position: fixed;
+      bottom: 12px;
+      left: 12px;
+      background: #2563EB;
+      color: #fff;
+      border: none;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      display: none;
+      z-index: 9999;
+      transition: background 0.15s;
+    }
+    .export-btn:hover { background: #1D4ED8; }
+    .export-btn:disabled { background: #6B7280; cursor: wait; }
+    body[data-wallpaper] .export-btn { display: block; }
   </style>
 </head>
 
@@ -1446,6 +1467,7 @@
 
   <!-- Wallpaper exit hint -->
   <div class="wallpaper-exit-hint" id="wallpaperExitHint">退出横屏模式 (Esc)</div>
+  <button class="export-btn" id="exportBtn">⬇ 导出 PNG</button>
 
   <!-- Wallpaper Mode Script -->
   <script>
@@ -1502,6 +1524,54 @@
 
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && document.body.hasAttribute('data-wallpaper')) exitWallpaper();
+      });
+    })();
+  </script>
+
+  <!-- html2canvas for PNG export -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+  <!-- Export PNG Script -->
+  <script>
+    (function () {
+      var exportBtn = document.getElementById('exportBtn');
+      var page = document.querySelector('.page');
+
+      exportBtn.addEventListener('click', function () {
+        exportBtn.disabled = true;
+        exportBtn.textContent = '生成中…';
+
+        // 临时重置 transform，让 html2canvas 以 1920px 原始尺寸捕获
+        var savedCssText = page.style.cssText;
+        page.style.cssText = 'width:1920px; max-width:1920px;';
+        document.body.style.overflow = 'visible';
+
+        html2canvas(page, {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: '#ffffff',
+          width: 1920,
+          height: 1080,
+          windowWidth: 1920,
+          windowHeight: 1080,
+          logging: false
+        }).then(function (canvas) {
+          page.style.cssText = savedCssText;
+          document.body.style.overflow = '';
+
+          var link = document.createElement('a');
+          link.download = 'claude-code-cheatsheet.png';
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+
+          exportBtn.disabled = false;
+          exportBtn.textContent = '⬇ 导出 PNG';
+        }).catch(function () {
+          page.style.cssText = savedCssText;
+          document.body.style.overflow = '';
+          exportBtn.disabled = false;
+          exportBtn.textContent = '⬇ 导出 PNG';
+        });
       });
     })();
   </script>
