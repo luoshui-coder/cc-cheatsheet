@@ -735,6 +735,95 @@
       font-size: 1.6rem;
     }
 
+    .page.landscape-layout {
+      width: 1920px;
+      max-width: 1920px;
+      min-height: 1080px;
+      height: 1080px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page.landscape-layout .main-grid {
+      gap: 1.2mm;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .page.landscape-layout .section-keyboard-mcp,
+    .page.landscape-layout .section-slash-memory,
+    .page.landscape-layout .section-workflows-config,
+    .page.landscape-layout .section-skills-cli {
+      min-height: 0;
+      height: 100%;
+      gap: 1.2mm;
+    }
+
+    .page.landscape-layout .section {
+      min-height: 0;
+    }
+
+    .page.landscape-layout .section-keyboard-mcp .section:first-child,
+    .page.landscape-layout .section-slash-memory .section:first-child,
+    .page.landscape-layout .section-workflows-config .section:first-child,
+    .page.landscape-layout .section-skills-cli .section:first-child {
+      flex: 1.15;
+    }
+
+    .page.landscape-layout .section-keyboard-mcp .section:last-child,
+    .page.landscape-layout .section-slash-memory .section:last-child,
+    .page.landscape-layout .section-workflows-config .section:last-child,
+    .page.landscape-layout .section-skills-cli .section:last-child {
+      flex: 0.85;
+    }
+
+    .page.landscape-layout .section-header {
+      padding: 0.8mm 1.6mm;
+      font-size: 0.76rem;
+    }
+
+    .page.landscape-layout .section-content {
+      padding: 1mm 1.8mm;
+    }
+
+    .page.landscape-layout .sub-header {
+      margin-top: 0.7mm;
+      margin-bottom: 0.25mm;
+      padding-bottom: 0.2mm;
+      font-size: 0.7rem;
+    }
+
+    .page.landscape-layout .row {
+      padding: 0.12mm 0;
+      gap: 1mm;
+    }
+
+    .page.landscape-layout .key,
+    .page.landscape-layout .desc {
+      font-size: 0.73rem;
+    }
+
+    .page.landscape-layout .keycap {
+      font-size: 0.68rem;
+      padding: 0.12mm 0.9mm;
+    }
+
+    .page.landscape-layout .footer {
+      margin-top: 1.2mm;
+      padding: 1mm 1.8mm;
+      font-size: 0.68rem;
+      margin-bottom: 0;
+    }
+
+    .page.landscape-layout .footer-row {
+      gap: 1.2mm;
+    }
+
+    .page.landscape-layout .badge-new {
+      font-size: 0.48rem;
+      padding: 0.12mm 0.8mm;
+    }
+
     .page.portrait-layout .main-grid {
       grid-template-columns: repeat(2, 1fr);
       grid-template-rows: auto;
@@ -1678,9 +1767,11 @@
       function applyView(mode) {
         if (mode === 'landscape') {
           document.body.setAttribute('data-view-mode', 'landscape');
+          page.classList.add('landscape-layout');
           applyScale(LANDSCAPE_WIDTH);
         } else {
           document.body.setAttribute('data-view-mode', 'portrait');
+          page.classList.remove('landscape-layout');
           page.classList.remove('portrait-layout');
           clearScale();
         }
@@ -1736,6 +1827,7 @@
         if (cloneHeader) cloneHeader.remove();
         var cloneChangelog = clone.querySelector('.changelog');
         if (cloneChangelog) cloneChangelog.remove();
+        clone.classList.add('landscape-layout');
 
         clone.style.transform = 'none';
         clone.style.transformOrigin = 'top left';
