@@ -585,16 +585,22 @@
       }
 
       .os-toggle,
-      .lang-toggle {
+      .lang-toggle,
+      .view-toggle,
+      .export-btn {
         order: -1;
       }
 
       .os-btn,
-      .lang-btn {
+      .lang-btn,
+      .view-btn,
+      .export-btn {
         padding: 2px 6px;
       }
 
-      .os-btn svg {
+      .os-btn svg,
+      .view-btn svg,
+      .export-btn svg {
         width: 11px;
         height: 11px;
       }
@@ -632,7 +638,8 @@
     }
 
     .os-toggle,
-    .lang-toggle {
+    .lang-toggle,
+    .view-toggle {
       display: flex;
       border: 1px solid #9CA3AF;
       border-radius: 5px;
@@ -641,10 +648,13 @@
     }
 
     .os-btn,
-    .lang-btn {
+    .lang-btn,
+    .view-btn,
+    .export-btn {
       background: #fff;
-      border: none;
+      border: 1px solid #9CA3AF;
       padding: 3px 8px;
+      min-height: 28px;
       font-size: 0.8rem;
       cursor: pointer;
       line-height: 1;
@@ -656,18 +666,22 @@
     }
 
     .os-btn+.os-btn,
-    .lang-btn+.lang-btn {
+    .lang-btn+.lang-btn,
+    .view-btn+.view-btn {
       border-left: 1px solid #9CA3AF;
     }
 
     .os-btn.active,
-    .lang-btn.active {
+    .lang-btn.active,
+    .view-btn.active {
       background: #111827;
       color: #fff;
     }
 
     .os-btn:hover:not(.active),
-    .lang-btn:hover:not(.active) {
+    .lang-btn:hover:not(.active),
+    .view-btn:hover:not(.active),
+    .export-btn:hover {
       background: #F3F4F6;
     }
 
@@ -675,6 +689,13 @@
       font-weight: 600;
       font-size: 0.75rem;
       padding: 3px 7px;
+    }
+
+    .view-btn svg,
+    .export-btn svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
     }
 
     /* === COMPACT MULTI-COLUMN LISTS === */
@@ -696,107 +717,77 @@
       }
     }
 
-    /* === WALLPAPER MODE === */
-    .wallpaper-btn {
-      background: #fff;
-      border: 1px solid #9CA3AF;
-      border-radius: 5px;
-      padding: 3px 8px;
-      font-size: 0.85rem;
-      cursor: pointer;
-      color: #6B7280;
-      transition: background 0.15s, color 0.15s;
-      line-height: 1;
-    }
-
-    .wallpaper-btn:hover {
-      background: #F3F4F6;
-    }
-
-    .wallpaper-btn.active {
-      background: #111827;
-      color: #fff;
-      border-color: #111827;
-    }
-
-    .wallpaper-exit-hint {
-      background: rgba(0, 0, 0, 0.65);
-      color: #fff;
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 0.7rem;
-      cursor: pointer;
-      display: none;
-      user-select: none;
-      border: none;
-      white-space: nowrap;
-    }
-
-    .wallpaper-exit-hint:hover {
-      background: rgba(0, 0, 0, 0.85);
-    }
-
-    body[data-wallpaper] {
+    /* === VIEW MODES === */
+    body[data-view-mode="landscape"] {
       overflow: hidden;
       background: #fff;
     }
 
-    body[data-wallpaper] .wallpaper-exit-hint {
-      display: inline-flex;
-      align-items: center;
-    }
-
-    body[data-wallpaper] .changelog {
+    body[data-view-mode="landscape"] .changelog {
       display: none !important;
     }
 
-    body[data-wallpaper] .os-toggle {
+    body[data-view-mode="landscape"] .header-meta {
       display: none !important;
     }
 
-    body[data-wallpaper] .lang-toggle {
-      display: none !important;
-    }
-
-    body[data-wallpaper] .wallpaper-btn {
-      display: none !important;
-    }
-
-    body[data-wallpaper] .header-meta {
-      display: none !important;
-    }
-
-    body[data-wallpaper] .header h1 {
+    body[data-view-mode="landscape"] .header h1 {
       font-size: 1.6rem;
+    }
+
+    .page.portrait-layout .main-grid {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: auto;
+      align-items: start;
+    }
+
+    .page.portrait-layout .section-keyboard-mcp {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .page.portrait-layout .section-slash-memory {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .page.portrait-layout .section-workflows-config {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .page.portrait-layout .section-skills-cli {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    .page.portrait-layout .header {
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .page.portrait-layout .header-right {
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 2mm;
     }
 
     /* === EXPORT PNG BUTTON === */
     .export-btn {
-      background: #2563EB;
-      color: #fff;
-      border: none;
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 0.7rem;
+      gap: 0;
+      padding: 3px 8px;
+      border-radius: 5px;
+      font-size: 0.78rem;
       font-family: var(--font-sans);
-      cursor: pointer;
-      display: none;
       transition: background 0.15s;
-      white-space: nowrap;
-    }
-
-    .export-btn:hover {
-      background: #1D4ED8;
+      display: inline-flex;
     }
 
     .export-btn:disabled {
       background: #6B7280;
+      border-color: #6B7280;
+      color: #fff;
       cursor: wait;
-    }
-
-    body[data-wallpaper] .export-btn {
-      display: inline-flex;
-      align-items: center;
     }
   </style>
 </head>
@@ -823,18 +814,28 @@
           <button class="lang-btn active" data-lang="zh" title="中文">中</button>
           <button class="lang-btn" data-lang="en" title="English">EN</button>
         </div>
-        <button class="wallpaper-btn" id="wallpaperBtn" title="横屏模式 / Landscape Mode">
-          <!-- 横屏图标（默认）-->
-          <svg class="icon-landscape" width="18" height="13" viewBox="0 0 18 13" fill="none" stroke="currentColor"
-            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="0.75" y="0.75" width="16.5" height="11.5" rx="1.5" />
-            <line x1="0.75" y1="3.5" x2="17.25" y2="3.5" />
-          </svg>
-          <!-- 竖屏图标（壁纸模式激活时）-->
-          <svg class="icon-portrait" width="11" height="17" viewBox="0 0 11 17" fill="none" stroke="currentColor"
-            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:none">
-            <rect x="0.75" y="0.75" width="9.5" height="15.5" rx="1.5" />
-            <line x1="0.75" y1="3.5" x2="10.25" y2="3.5" />
+        <div class="view-toggle" id="viewToggle">
+          <button class="view-btn" data-view="landscape" title="横屏模式 / Landscape Mode">
+            <svg width="18" height="13" viewBox="0 0 18 13" fill="none" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="0.75" y="0.75" width="16.5" height="11.5" rx="1.5" />
+              <line x1="0.75" y1="3.5" x2="17.25" y2="3.5" />
+            </svg>
+          </button>
+          <button class="view-btn" data-view="portrait" title="竖屏模式 / Portrait Mode">
+            <svg width="11" height="17" viewBox="0 0 11 17" fill="none" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="0.75" y="0.75" width="9.5" height="15.5" rx="1.5" />
+              <line x1="0.75" y1="3.5" x2="10.25" y2="3.5" />
+            </svg>
+          </button>
+        </div>
+        <button class="export-btn" id="exportBtn" title="下载 PNG / Download PNG">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M8 2.5v7" />
+            <path d="M5.5 7.5L8 10l2.5-2.5" />
+            <path d="M3 12.5h10" />
           </svg>
         </button>
         <div class="header-meta">
@@ -842,8 +843,6 @@
           <span class="last-updated" data-zh="最后更新: 2026年4月4日" data-en="Last updated: April 4, 2026">最后更新:
             2026年4月4日</span>
         </div>
-        <button class="export-btn" id="exportBtn">⬇ 导出 PNG</button>
-        <div class="wallpaper-exit-hint" id="wallpaperExitHint">退出横屏模式 (Esc)</div>
       </div>
     </header>
 
@@ -1601,14 +1600,13 @@
   <!-- Wallpaper Mode Script -->
   <script>
     (function () {
-      var btn = document.getElementById('wallpaperBtn');
+      var toggle = document.getElementById('viewToggle');
+      var viewBtns = toggle.querySelectorAll('.view-btn');
       var page = document.querySelector('.page');
-      var hint = document.getElementById('wallpaperExitHint');
-      var iconLandscape = btn.querySelector('.icon-landscape');
-      var iconPortrait = btn.querySelector('.icon-portrait');
-      var W = 1920;
+      var LANDSCAPE_WIDTH = 1920;
+      var PORTRAIT_WIDTH = 1080;
 
-      function measureWallpaperHeight() {
+      function measureScaledHeight(targetWidth) {
         var saved = {
           transform: page.style.transform,
           transformOrigin: page.style.transformOrigin,
@@ -1627,8 +1625,8 @@
         page.style.position = 'absolute';
         page.style.top = '0';
         page.style.left = '-99999px';
-        page.style.width = W + 'px';
-        page.style.maxWidth = W + 'px';
+        page.style.width = targetWidth + 'px';
+        page.style.maxWidth = targetWidth + 'px';
         page.style.height = 'auto';
         page.style.overflow = 'visible';
         page.style.visibility = 'hidden';
@@ -1649,20 +1647,20 @@
         return height;
       }
 
-      function applyScale() {
-        var contentHeight = measureWallpaperHeight();
-        var scaleX = window.innerWidth / W;
+      function applyScale(targetWidth) {
+        var contentHeight = measureScaledHeight(targetWidth);
+        var scaleX = window.innerWidth / targetWidth;
         var scaleY = window.innerHeight / contentHeight;
         var scale = Math.min(scaleX, scaleY);
-        var offsetX = (window.innerWidth - W * scale) / 2;
+        var offsetX = (window.innerWidth - targetWidth * scale) / 2;
         var offsetY = (window.innerHeight - contentHeight * scale) / 2;
-        page.style.transform = 'translate(' + offsetX + 'px, ' + offsetY + 'px) scale(' + scale + ')';
+        page.style.transform = 'translate(' + offsetX + 'px, ' + Math.max(offsetY, 0) + 'px) scale(' + scale + ')';
         page.style.transformOrigin = 'top left';
         page.style.position = 'fixed';
         page.style.top = '0';
         page.style.left = '0';
-        page.style.width = W + 'px';
-        page.style.maxWidth = W + 'px';
+        page.style.width = targetWidth + 'px';
+        page.style.maxWidth = targetWidth + 'px';
         page.style.height = 'auto';
         page.style.overflow = 'visible';
       }
@@ -1671,33 +1669,36 @@
         page.style.cssText = '';
       }
 
-      function enterWallpaper() {
-        document.body.setAttribute('data-wallpaper', '1');
-        btn.classList.add('active');
-        iconLandscape.style.display = 'none';
-        iconPortrait.style.display = '';
-        applyScale();
-        window.addEventListener('resize', applyScale);
+      function syncViewButtons(mode) {
+        viewBtns.forEach(function (btn) {
+          btn.classList.toggle('active', btn.dataset.view === mode);
+        });
       }
 
-      function exitWallpaper() {
-        document.body.removeAttribute('data-wallpaper');
-        btn.classList.remove('active');
-        iconLandscape.style.display = '';
-        iconPortrait.style.display = 'none';
-        clearScale();
-        window.removeEventListener('resize', applyScale);
+      function applyView(mode) {
+        if (mode === 'landscape') {
+          document.body.setAttribute('data-view-mode', 'landscape');
+          applyScale(LANDSCAPE_WIDTH);
+        } else {
+          document.body.setAttribute('data-view-mode', 'portrait');
+          page.classList.remove('portrait-layout');
+          clearScale();
+        }
+        syncViewButtons(mode);
+        localStorage.setItem('cc-view', mode);
       }
 
-      btn.addEventListener('click', function () {
-        document.body.hasAttribute('data-wallpaper') ? exitWallpaper() : enterWallpaper();
+      viewBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          applyView(btn.dataset.view);
+        });
       });
 
-      hint.addEventListener('click', exitWallpaper);
-
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && document.body.hasAttribute('data-wallpaper')) exitWallpaper();
+      window.addEventListener('resize', function () {
+        applyView(localStorage.getItem('cc-view') || 'portrait');
       });
+
+      applyView(localStorage.getItem('cc-view') || 'portrait');
     })();
   </script>
 
@@ -1709,45 +1710,132 @@
     (function () {
       var exportBtn = document.getElementById('exportBtn');
       var page = document.querySelector('.page');
+      var LANDSCAPE_WIDTH = 1920;
+      var LANDSCAPE_HEIGHT = 1080;
+      var PORTRAIT_WIDTH = 1240;
+      var PORTRAIT_HEIGHT = 1754;
+      var PORTRAIT_CONTENT_WIDTH = 1040;
+
+      function setExportLoading(loading) {
+        exportBtn.disabled = loading;
+        exportBtn.style.opacity = loading ? '0.7' : '1';
+      }
+
+      function buildLandscapeStage() {
+        var stage = document.createElement('div');
+        stage.style.position = 'fixed';
+        stage.style.left = '-99999px';
+        stage.style.top = '0';
+        stage.style.width = LANDSCAPE_WIDTH + 'px';
+        stage.style.height = LANDSCAPE_HEIGHT + 'px';
+        stage.style.overflow = 'hidden';
+        stage.style.background = '#ffffff';
+
+        var clone = page.cloneNode(true);
+        var cloneHeader = clone.querySelector('.header');
+        if (cloneHeader) cloneHeader.remove();
+        var cloneChangelog = clone.querySelector('.changelog');
+        if (cloneChangelog) cloneChangelog.remove();
+
+        clone.style.transform = 'none';
+        clone.style.transformOrigin = 'top left';
+        clone.style.position = 'absolute';
+        clone.style.top = '0';
+        clone.style.left = '0';
+        clone.style.width = LANDSCAPE_WIDTH + 'px';
+        clone.style.maxWidth = LANDSCAPE_WIDTH + 'px';
+        clone.style.height = 'auto';
+        clone.style.margin = '0';
+        clone.style.overflow = 'visible';
+        clone.style.borderTop = '40px solid #1F2937';
+        clone.style.boxSizing = 'border-box';
+
+        stage.appendChild(clone);
+        document.body.appendChild(stage);
+
+        var naturalHeight = clone.scrollHeight + 40;
+        var scale = Math.min(1, LANDSCAPE_HEIGHT / naturalHeight);
+        clone.style.transform = 'scale(' + scale + ')';
+        clone.style.height = naturalHeight + 'px';
+
+        return {
+          stage: stage,
+          fileName: 'claude-code-cheatsheet-landscape.png',
+          width: LANDSCAPE_WIDTH,
+          height: LANDSCAPE_HEIGHT
+        };
+      }
+
+      function buildPortraitStage() {
+        var stage = document.createElement('div');
+        stage.style.position = 'fixed';
+        stage.style.left = '-99999px';
+        stage.style.top = '0';
+        stage.style.width = PORTRAIT_WIDTH + 'px';
+        stage.style.height = PORTRAIT_HEIGHT + 'px';
+        stage.style.overflow = 'hidden';
+        stage.style.background = '#ffffff';
+
+        var clone = page.cloneNode(true);
+
+        clone.style.transform = 'none';
+        clone.style.transformOrigin = 'top left';
+        clone.style.position = 'absolute';
+        clone.style.top = '0';
+        clone.style.left = '0';
+        clone.style.width = PORTRAIT_CONTENT_WIDTH + 'px';
+        clone.style.maxWidth = PORTRAIT_CONTENT_WIDTH + 'px';
+        clone.style.height = 'auto';
+        clone.style.margin = '0';
+        clone.style.overflow = 'visible';
+
+        stage.appendChild(clone);
+        document.body.appendChild(stage);
+
+        var availableWidth = PORTRAIT_WIDTH;
+        var availableHeight = PORTRAIT_HEIGHT;
+        var naturalWidth = clone.scrollWidth;
+        var naturalHeight = clone.scrollHeight;
+        var scale = Math.min(availableWidth / naturalWidth, availableHeight / naturalHeight);
+        var offsetX = (PORTRAIT_WIDTH - naturalWidth * scale) / 2;
+        var offsetY = (PORTRAIT_HEIGHT - naturalHeight * scale) / 2;
+        clone.style.transform = 'translate(' + offsetX + 'px, ' + Math.max(offsetY, 0) + 'px) scale(' + scale + ')';
+        clone.style.height = naturalHeight + 'px';
+
+        return {
+          stage: stage,
+          fileName: 'claude-code-cheatsheet-portrait-a4.png',
+          width: PORTRAIT_WIDTH,
+          height: PORTRAIT_HEIGHT
+        };
+      }
 
       exportBtn.addEventListener('click', function () {
-        exportBtn.disabled = true;
-        exportBtn.textContent = '生成中…';
+        var currentView = document.body.getAttribute('data-view-mode') || 'landscape';
+        var snapshot = currentView === 'portrait' ? buildPortraitStage() : buildLandscapeStage();
+        setExportLoading(true);
 
-        // 导出壁纸尺寸 1920x1080，隐藏 header
-        var header = page.querySelector('.header');
-        var savedCssText = page.style.cssText;
-        header.style.display = 'none';
-        page.style.cssText = 'width:1920px; max-width:1920px; height:1080px; overflow:hidden; border-top:40px solid #1F2937; box-sizing:border-box;';
-        document.body.style.overflow = 'visible';
-
-        html2canvas(page, {
+        html2canvas(snapshot.stage, {
           scale: 2,
           useCORS: true,
           backgroundColor: '#ffffff',
-          width: 1920,
-          height: 1080,
-          windowWidth: 1920,
-          windowHeight: 1080,
+          width: snapshot.width,
+          height: snapshot.height,
+          windowWidth: snapshot.width,
+          windowHeight: snapshot.height,
           logging: false
         }).then(function (canvas) {
-          header.style.display = '';
-          page.style.cssText = savedCssText;
-          document.body.style.overflow = '';
+          snapshot.stage.remove();
 
           var link = document.createElement('a');
-          link.download = 'claude-code-cheatsheet-wallpaper.png';
+          link.download = snapshot.fileName;
           link.href = canvas.toDataURL('image/png');
           link.click();
 
-          exportBtn.disabled = false;
-          exportBtn.textContent = '⬇ 导出 PNG';
+          setExportLoading(false);
         }).catch(function () {
-          header.style.display = '';
-          page.style.cssText = savedCssText;
-          document.body.style.overflow = '';
-          exportBtn.disabled = false;
-          exportBtn.textContent = '⬇ 导出 PNG';
+          snapshot.stage.remove();
+          setExportLoading(false);
         });
       });
     })();
