@@ -1755,7 +1755,9 @@
 
         var naturalHeight = clone.scrollHeight + 40;
         var scale = Math.min(1, LANDSCAPE_HEIGHT / naturalHeight);
-        clone.style.transform = 'scale(' + scale + ')';
+        var scaledWidth = LANDSCAPE_WIDTH * scale;
+        var offsetX = (LANDSCAPE_WIDTH - scaledWidth) / 2;
+        clone.style.transform = 'translate(' + offsetX + 'px, 0) scale(' + scale + ')';
         clone.style.height = naturalHeight + 'px';
 
         return {
