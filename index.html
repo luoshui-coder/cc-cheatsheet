@@ -1606,14 +1606,56 @@
       var hint = document.getElementById('wallpaperExitHint');
       var iconLandscape = btn.querySelector('.icon-landscape');
       var iconPortrait = btn.querySelector('.icon-portrait');
-      var W = 1920, H = 1080;
+      var W = 1920;
+
+      function measureWallpaperHeight() {
+        var saved = {
+          transform: page.style.transform,
+          transformOrigin: page.style.transformOrigin,
+          position: page.style.position,
+          top: page.style.top,
+          left: page.style.left,
+          width: page.style.width,
+          maxWidth: page.style.maxWidth,
+          height: page.style.height,
+          overflow: page.style.overflow,
+          visibility: page.style.visibility
+        };
+
+        page.style.transform = 'none';
+        page.style.transformOrigin = 'top left';
+        page.style.position = 'absolute';
+        page.style.top = '0';
+        page.style.left = '-99999px';
+        page.style.width = W + 'px';
+        page.style.maxWidth = W + 'px';
+        page.style.height = 'auto';
+        page.style.overflow = 'visible';
+        page.style.visibility = 'hidden';
+
+        var height = page.scrollHeight;
+
+        page.style.transform = saved.transform;
+        page.style.transformOrigin = saved.transformOrigin;
+        page.style.position = saved.position;
+        page.style.top = saved.top;
+        page.style.left = saved.left;
+        page.style.width = saved.width;
+        page.style.maxWidth = saved.maxWidth;
+        page.style.height = saved.height;
+        page.style.overflow = saved.overflow;
+        page.style.visibility = saved.visibility;
+
+        return height;
+      }
 
       function applyScale() {
+        var contentHeight = measureWallpaperHeight();
         var scaleX = window.innerWidth / W;
-        var scaleY = window.innerHeight / H;
+        var scaleY = window.innerHeight / contentHeight;
         var scale = Math.min(scaleX, scaleY);
         var offsetX = (window.innerWidth - W * scale) / 2;
-        var offsetY = (window.innerHeight - H * scale) / 2;
+        var offsetY = (window.innerHeight - contentHeight * scale) / 2;
         page.style.transform = 'translate(' + offsetX + 'px, ' + offsetY + 'px) scale(' + scale + ')';
         page.style.transformOrigin = 'top left';
         page.style.position = 'fixed';
@@ -1621,6 +1663,8 @@
         page.style.left = '0';
         page.style.width = W + 'px';
         page.style.maxWidth = W + 'px';
+        page.style.height = 'auto';
+        page.style.overflow = 'visible';
       }
 
       function clearScale() {
