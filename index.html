@@ -838,9 +838,9 @@
           </svg>
         </button>
         <div class="header-meta">
-          <span class="version-info">Claude Code v2.1.83</span>
-          <span class="last-updated" data-zh="最后更新: 2026年3月25日" data-en="Last updated: March 25, 2026">最后更新:
-            2026年3月25日</span>
+          <span class="version-info">Claude Code v2.1.92</span>
+          <span class="last-updated" data-zh="最后更新: 2026年4月4日" data-en="Last updated: April 4, 2026">最后更新:
+            2026年4月4日</span>
         </div>
         <button class="export-btn" id="exportBtn">⬇ 导出 PNG</button>
         <div class="wallpaper-exit-hint" id="wallpaperExitHint">退出横屏模式 (Esc)</div>
@@ -854,21 +854,23 @@
           data-en="📋 Recent Changes">📋 近期变更</a> <span class="changelog-dismiss"
           onclick="event.stopPropagation(); this.closest('.changelog').remove()">✕</span></div>
       <ul class="changelog-list">
-        <li data-zh="managed-settings.d/ 插入式策略片段 (v2.1.83)"
-          data-en="managed-settings.d/ drop-in policy fragments (v2.1.83)"><code>managed-settings.d/</code> 插入式策略片段
-          (v2.1.83)</li>
-        <li data-zh="CwdChanged / FileChanged hook 事件" data-en="CwdChanged / FileChanged hook events">
-          <code>CwdChanged</code> / <code>FileChanged</code> hook 事件
+        <li data-zh="<code>forceRemoteSettingsRefresh</code> 策略：启动时 fail-closed（v2.1.92）"
+          data-en="<code>forceRemoteSettingsRefresh</code> policy — fail-closed startup (v2.1.92)"><code>forceRemoteSettingsRefresh</code>
+          策略：启动时 fail-closed（v2.1.92）</li>
+        <li data-zh="登录页交互式 Bedrock 配置向导（v2.1.92）"
+          data-en="Interactive Bedrock setup wizard on login screen (v2.1.92)">登录页交互式 Bedrock 配置向导（v2.1.92）</li>
+        <li data-zh="<code>/cost</code> 新增按模型 + cache 命中明细（v2.1.92）"
+          data-en="Per-model + cache-hit breakdown in <code>/cost</code> (v2.1.92)"><code>/cost</code> 新增按模型 + cache 命中明细（v2.1.92）
         </li>
-        <li data-zh="终止代理快捷键 → Ctrl+X Ctrl+K（原为 Ctrl+F）" data-en="Kill-agents keybinding → Ctrl+X Ctrl+K (was Ctrl+F)">
-          终止代理快捷键 → <code>Ctrl+X Ctrl+K</code>（原为 Ctrl+F）</li>
-        <li data-zh="转录搜索: / 在详细模式中, n/N 步进" data-en="Transcript search: / in verbose, n/N step">转录搜索: <code>/</code>
-          在详细模式中, <code>n</code>/<code>N</code> 步进</li>
-        <li data-zh="Ctrl+X Ctrl+E — 打开编辑器（Ctrl+G 别名）" data-en="Ctrl+X Ctrl+E — open editor (alias for Ctrl+G)">
-          <code>Ctrl+X Ctrl+E</code> — 打开编辑器（Ctrl+G 别名）
+        <li data-zh="<code>/release-notes</code> 现为交互式版本选择器（v2.1.92）"
+          data-en="<code>/release-notes</code> is now an interactive version picker (v2.1.92)"><code>/release-notes</code>
+          现为交互式版本选择器（v2.1.92）</li>
+        <li data-zh="移除 <code>/tag</code> 与 <code>/vim</code> 命令（v2.1.92）"
+          data-en="Removed <code>/tag</code> and <code>/vim</code> commands (v2.1.92)">移除 <code>/tag</code> 与
+          <code>/vim</code> 命令（v2.1.92）
         </li>
-        <li data-zh="initialPrompt 代理 frontmatter" data-en="initialPrompt agent frontmatter"><code>initialPrompt</code>
-          代理 frontmatter</li>
+        <li data-zh="大文件下 Write 工具 diff 提速 60%（v2.1.92）"
+          data-en="Write tool diff 60% faster for large files (v2.1.92)">大文件下 Write 工具 diff 提速 60%（v2.1.92）</li>
       </ul>
     </div>
 
@@ -892,7 +894,7 @@
               <span class="desc" data-zh="清屏" data-en="Clear screen">清屏</span>
             </div>
             <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">O</span></span>
-              <span class="desc" data-zh="切换详细输出" data-en="Toggle verbose output">切换详细输出</span>
+              <span class="desc" data-zh="切换详细输出 / 转录模式" data-en="Toggle verbose/transcript">切换详细输出 / 转录模式</span>
             </div>
             <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">R</span></span>
               <span class="desc" data-zh="反向搜索历史" data-en="Reverse search history">反向搜索历史</span>
@@ -911,14 +913,15 @@
               <span class="desc" data-zh="切换任务列表" data-en="Toggle task list">切换任务列表</span>
             </div>
             <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">V</span></span>
-              <span class="desc" data-zh="粘贴图片" data-en="Paste image">粘贴图片</span>
+              <span class="desc" data-zh="粘贴图片（[Image #N] 标签）" data-en="Paste image ([Image #N] chip)">粘贴图片（[Image
+                  #N] 标签）</span>
             </div>
             <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">X</span> <span
                   class="keycap">Ctrl</span><span class="keycap">K</span></span> <span class="desc" data-zh="终止后台代理"
                 data-en="Kill background agents">终止后台代理<span class="badge-new" data-added="2026-03-25">NEW</span></span>
             </div>
             <div class="row"><span class="key"><span class="keycap">Esc</span><span class="keycap">Esc</span></span>
-              <span class="desc" data-zh="回退 / 撤销" data-en="Rewind / undo">回退 / 撤销</span>
+              <span class="desc" data-zh="回退或总结" data-en="Rewind or summarize">回退或总结</span>
             </div>
 
             <div class="sub-header" data-zh="模式切换" data-en="Mode Switching">模式切换</div>
@@ -929,6 +932,9 @@
                 class="desc" data-zh="切换模型" data-en="Switch model">切换模型</span></div>
             <div class="row"><span class="key"><span class="keycap">Alt</span><span class="keycap">T</span></span> <span
                 class="desc" data-zh="切换思考模式" data-en="Toggle thinking">切换思考模式</span></div>
+            <div class="row"><span class="key"><span class="keycap">Alt</span><span class="keycap">O</span></span> <span
+                class="desc" data-zh="切换快速模式" data-en="Toggle fast mode">切换快速模式<span class="badge-new"
+                  data-added="2026-04-04">NEW</span></span></div>
 
             <div class="sub-header" data-zh="输入" data-en="Input">输入</div>
             <div class="row"><span class="key"><span class="keycap">\</span><span class="keycap">Enter</span></span>
@@ -961,6 +967,17 @@
                 data-en="All projects">所有项目</span></div>
             <div class="row"><span class="key"><span class="keycap">B</span></span> <span class="desc" data-zh="当前分支"
                 data-en="Current branch">当前分支</span></div>
+
+            <div class="sub-header" data-zh="转录模式（Ctrl+O）" data-en="Transcript Mode (Ctrl+O)">转录模式（Ctrl+O）</div>
+            <div class="row"><span class="key"><span class="keycap">/</span></span> <span class="desc"
+                data-zh="搜索转录" data-en="Search transcript">搜索转录</span></div>
+            <div class="row"><span class="key"><span class="keycap">N</span> / <span class="keycap">Shift</span><span
+                  class="keycap">N</span></span> <span class="desc" data-zh="下一条 / 上一条匹配"
+                data-en="Next/prev match">下一条 / 上一条匹配</span></div>
+            <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">E</span></span> <span
+                class="desc" data-zh="切换显示全部" data-en="Toggle show all">切换显示全部</span></div>
+            <div class="row"><span class="key"><span class="keycap">Q</span> / <span class="keycap">Esc</span></span> <span
+                class="desc" data-zh="退出转录模式" data-en="Exit transcript">退出转录模式</span></div>
           </div>
         </section>
 
@@ -976,8 +993,8 @@
             <div class="row"><span class="key">--transport sse</span> <span class="desc" data-zh="远程 SSE"
                 data-en="Remote SSE">远程 SSE</span></div>
             <div class="sub-header" data-zh="作用域" data-en="Scopes">作用域</div>
-            <div class="row"><span class="key">Local</span> <span class="desc" data-zh="settings.local.json（仅自己）"
-                data-en="settings.local.json (you only)">settings.local.json（仅自己）</span></div>
+            <div class="row"><span class="key">Local</span> <span class="desc" data-zh="~/.claude.json（仅自己）"
+                data-en="~/.claude.json (you only)">~/.claude.json（仅自己）</span></div>
             <div class="row"><span class="key">Project</span> <span class="desc" data-zh=".mcp.json（共享/版本控制）"
                 data-en=".mcp.json (shared/VCS)">.mcp.json（共享/版本控制）</span></div>
             <div class="row"><span class="key">User</span> <span class="desc" data-zh="~/.claude.json（全局）"
@@ -992,6 +1009,11 @@
             <div class="row"><span class="key">Elicitation</span> <span class="desc" data-zh="服务器在任务中请求输入"
                 data-en="Servers request input mid-task">服务器在任务中请求输入<span class="badge-new"
                   data-added="2026-03-23">NEW</span></span></div>
+            <div class="row"><span class="key">2KB cap</span> <span class="desc" data-zh="工具描述 + 服务器指令长度上限"
+                data-en="Tool desc + server instructions limit">工具描述 + 服务器指令长度上限</span></div>
+            <div class="row"><span class="key">maxResultSizeChars</span> <span class="desc"
+                data-zh="_meta 注解覆盖（最高 500K）" data-en="_meta annotation override (up to 500K)">_meta 注解覆盖（最高
+                500K）<span class="badge-new" data-added="2026-04-04">NEW</span></span></div>
           </div>
         </section>
       </div>
@@ -1013,8 +1035,9 @@
                 data-en="Name current session">命名当前会话</span></div>
             <div class="row"><span class="key">/branch [name]</span> <span class="desc" data-zh="分支对话（/fork 别名）"
                 data-en="Branch conversation (/fork alias)">分支对话（/fork 别名）</span></div>
-            <div class="row"><span class="key">/cost</span> <span class="desc" data-zh="Token 用量统计"
-                data-en="Token usage stats">Token 用量统计</span></div>
+            <div class="row"><span class="key">/cost</span> <span class="desc" data-zh="Token 用量（按模型 + cache 明细）"
+                data-en="Token usage (per-model + cache breakdown)">Token 用量（按模型 + cache 明细）<span class="badge-new"
+                  data-added="2026-04-04">NEW</span></span></div>
             <div class="row"><span class="key">/context</span> <span class="desc" data-zh="可视化上下文（网格）"
                 data-en="Visualize context (grid)">可视化上下文（网格）</span></div>
             <div class="row"><span class="key">/diff</span> <span class="desc" data-zh="交互式 diff 查看器"
@@ -1033,15 +1056,14 @@
                 data-en="Switch model (←→ effort)">切换模型（←→ 调整 effort）</span></div>
             <div class="row"><span class="key">/fast [on|off]</span> <span class="desc" data-zh="切换快速模式"
                 data-en="Toggle fast mode">切换快速模式</span></div>
-            <div class="row"><span class="key">/vim</span> <span class="desc" data-zh="切换 vim 模式"
-                data-en="Toggle vim mode">切换 vim 模式</span></div>
             <div class="row"><span class="key">/theme</span> <span class="desc" data-zh="更换颜色主题"
                 data-en="Change color theme">更换颜色主题</span></div>
             <div class="row"><span class="key">/permissions</span> <span class="desc" data-zh="查看/更新权限"
                 data-en="View/update permissions">查看/更新权限</span></div>
             <div class="row"><span class="key">/effort [level]</span> <span class="desc"
-                data-zh="设置 effort（low/med/high/max/auto）" data-en="Set effort (low/med/high/max/auto)">设置
-                effort（low/med/high/max/auto）<span class="badge-new" data-added="2026-03-23">NEW</span></span></div>
+                data-zh="设置 effort（low/medium/high/max/auto）"
+                data-en="Set effort (low/medium/high/max/auto)">设置
+                effort（low/medium/high/max/auto）<span class="badge-new" data-added="2026-03-23">NEW</span></span></div>
             <div class="row"><span class="key">/color [color]</span> <span class="desc" data-zh="设置提示栏颜色"
                 data-en="Set prompt-bar color">设置提示栏颜色</span></div>
             <div class="row"><span class="key">/keybindings</span> <span class="desc" data-zh="自定义键盘快捷键"
@@ -1068,6 +1090,9 @@
                 data-en="Hot-reload plugins">热重载插件</span></div>
             <div class="row"><span class="key">/add-dir &lt;path&gt;</span> <span class="desc" data-zh="添加工作目录"
                 data-en="Add working directory">添加工作目录</span></div>
+            <div class="row"><span class="key">/powerup</span> <span class="desc" data-zh="交互式功能教学"
+                data-en="Interactive feature lessons">交互式功能教学<span class="badge-new"
+                  data-added="2026-04-04">NEW</span></span></div>
 
             <div class="sub-header" data-zh="特殊" data-en="Special">特殊</div>
             <div class="row"><span class="key">/btw &lt;question&gt;</span> <span class="desc" data-zh="附带问题（无上下文）"
@@ -1101,8 +1126,9 @@
                 data-en="Show help + commands">显示帮助 + 命令</span></div>
             <div class="row"><span class="key">/feedback</span> <span class="desc" data-zh="提交反馈（别名: /bug）"
                 data-en="Submit feedback (alias: /bug)">提交反馈（别名: /bug）</span></div>
-            <div class="row"><span class="key">/release-notes</span> <span class="desc" data-zh="查看完整变更日志"
-                data-en="View full changelog">查看完整变更日志</span></div>
+            <div class="row"><span class="key">/release-notes</span> <span class="desc" data-zh="交互式版本变更日志"
+                data-en="Interactive version changelog">交互式版本变更日志<span class="badge-new"
+                  data-added="2026-04-04">NEW</span></span></div>
             <div class="row"><span class="key">/stickers</span> <span class="desc" data-zh="订购贴纸！🎉"
                 data-en="Order stickers! 🎉">订购贴纸！🎉</span></div>
           </div>
@@ -1129,8 +1155,9 @@
                 data-en="Import in CLAUDE.md">在 CLAUDE.md 中导入</span></div>
             <div class="sub-header" data-zh="自动记忆" data-en="Auto Memory">自动记忆</div>
             <div class="row"><span class="key">~/.claude/projects/&lt;proj&gt;/memory/</span></div>
-            <div class="row"><span class="desc" data-zh="MEMORY.md + 主题文件，自动加载"
-                data-en="MEMORY.md + topic files, auto-loaded">MEMORY.md + 主题文件，自动加载</span></div>
+            <div class="row"><span class="desc" data-zh="MEMORY.md + 主题文件，自动加载（上限 25KB/200 行）"
+                data-en="MEMORY.md + topic files, auto-loaded (25KB/200 lines max)">MEMORY.md + 主题文件，自动加载（上限
+                25KB/200 行）</span></div>
           </div>
         </section>
       </div>
@@ -1155,9 +1182,14 @@
             <div class="row"><span class="key"><span class="keycap">Ctrl</span><span class="keycap">O</span></span>
               <span class="desc" data-zh="查看思考（详细模式）" data-en="See thinking (verbose)">查看思考（详细模式）</span>
             </div>
-            <div class="row"><span class="key">/effort</span> <span class="desc" data-zh="○ low · ◐ med · ● high"
-                data-en="○ low · ◐ med · ● high">○ low · ◐ med · ● high<span class="badge-new"
-                  data-added="2026-03-23">NEW</span></span></div>
+            <div class="row"><span class="key">/effort</span> <span class="desc"
+                data-zh="○ low · ◐ medium · ● high · ★ max" data-en="○ low · ◐ medium · ● high · ★ max">○ low · ◐
+                medium · ● high · ★ max<span class="badge-new" data-added="2026-03-23">NEW</span></span></div>
+            <div class="row"><span class="key" data-zh="自动模式拒绝" data-en="Auto Mode Denied">自动模式拒绝</span> <span
+                class="desc" data-zh="被拒绝时可重试" data-en="Retry when denied">被拒绝时可重试</span></div>
+            <div class="row"><span class="key">/permissions → Recent</span> <span class="desc"
+                data-zh="按 R 重试被拒绝项" data-en="Retry denied with R">按 R 重试被拒绝项<span class="badge-new"
+                  data-added="2026-04-04">NEW</span></span></div>
             <div class="sub-header" data-zh="Git Worktrees" data-en="Git Worktrees">Git Worktrees</div>
             <div class="row"><span class="key">--worktree name</span> <span class="desc" data-zh="每个功能独立分支"
                 data-en="Isolated branch per feature">每个功能独立分支</span></div>
@@ -1181,7 +1213,8 @@
             <div class="row"><span class="key">/compact [focus]</span> <span class="desc" data-zh="带焦点压缩"
                 data-en="Compress with focus">带焦点压缩</span></div>
             <div class="row"><span class="key" data-zh="自动压缩" data-en="Auto-compact">自动压缩</span> <span class="desc"
-                data-zh="~95% 容量时触发" data-en="~95% capacity">~95% 容量时触发</span></div>
+                data-zh="~95% 容量时触发（抖动检测：3 次）" data-en="~95% capacity (thrash detection: 3x)">~95% 容量时触发（抖动检测：3
+                次）<span class="badge-new" data-added="2026-04-04">NEW</span></span></div>
             <div class="row"><span class="key" data-zh="1M 上下文" data-en="1M context">1M 上下文</span> <span class="desc"
                 data-zh="Opus 4.6（Max/Team/Ent）" data-en="Opus 4.6 (Max/Team/Ent)">Opus 4.6（Max/Team/Ent）</span></div>
             <div class="row"><span class="key">CLAUDE.md</span> <span class="desc" data-zh="压缩后仍保留！"
@@ -1205,8 +1238,9 @@
             <div class="sub-header" data-zh="调度与远程" data-en="Scheduling & Remote">调度与远程</div>
             <div class="row"><span class="key">/loop 5m msg</span> <span class="desc" data-zh="循环任务"
                 data-en="Recurring task">循环任务</span></div>
-            <div class="row"><span class="key">/rc</span> <span class="desc" data-zh="远程控制"
-                data-en="Remote control">远程控制</span></div>
+            <div class="row"><span class="key">/rc</span> <span class="desc"
+                data-zh="远程控制（默认主机名前缀）" data-en="Remote control (hostname prefix default)">远程控制（默认主机名前缀）<span
+                  class="badge-new" data-added="2026-04-04">NEW</span></span></div>
             <div class="row"><span class="key">--remote</span> <span class="desc" data-zh="在 claude.ai 上的 Web 会话"
                 data-en="Web session on claude.ai">在 claude.ai 上的 Web 会话</span></div>
           </div>
@@ -1226,6 +1260,8 @@
                 data-en="OAuth, MCP, state">OAuth, MCP, 状态</span></div>
             <div class="row"><span class="key">.mcp.json</span> <span class="desc" data-zh="项目 MCP 服务器"
                 data-en="Project MCP servers">项目 MCP 服务器</span></div>
+            <div class="row"><span class="key">managed-settings.d/</span> <span class="desc"
+                data-zh="插入式策略片段" data-en="Drop-in policy fragments">插入式策略片段</span></div>
             <div class="sub-header" data-zh="关键设置" data-en="Key Settings">关键设置</div>
             <div class="row"><span class="key">modelOverrides</span> <span class="desc" data-zh="映射模型选择器 → 自定义 ID"
                 data-en="Map model picker → custom IDs">映射模型选择器 → 自定义 ID</span></div>
@@ -1234,21 +1270,49 @@
             <div class="row"><span class="key">worktree.sparsePaths</span> <span class="desc" data-zh="稀疏检出目录"
                 data-en="Sparse checkout dirs">稀疏检出目录<span class="badge-new" data-added="2026-03-23">NEW</span></span>
             </div>
+            <div class="row"><span class="key">sandbox.failIfUnavailable</span> <span class="desc"
+                data-zh="sandbox 失败时直接退出" data-en="Exit if sandbox fails">sandbox 失败时直接退出</span></div>
+            <div class="row"><span class="key">hooks: if</span> <span class="desc"
+                data-zh="条件 hooks（沿用权限规则语法）" data-en="Conditional hooks (permission rule syntax)">条件 hooks（沿用权限规则语法）</span>
+            </div>
+            <div class="row"><span class="key">PermissionDenied</span> <span class="desc"
+                data-zh="自动模式拒绝 hook" data-en="Hook: auto-mode denial">自动模式拒绝 hook<span class="badge-new"
+                  data-added="2026-04-04">NEW</span></span></div>
+            <div class="row"><span class="key">showThinkingSummaries</span> <span class="desc"
+                data-zh="现为显式开启（默认关闭）" data-en="Opt-in (off by default now)">现为显式开启（默认关闭）<span class="badge-new"
+                  data-added="2026-04-04">NEW</span></span></div>
+            <div class="row"><span class="key">allowedChannelPlugins</span> <span class="desc"
+                data-zh="管理员频道插件白名单" data-en="Admin channel plugin allowlist">管理员频道插件白名单</span></div>
+            <div class="row"><span class="key">hooks: "defer"</span> <span class="desc"
+                data-zh="暂停无头任务，稍后恢复" data-en="Pause headless → resume later">暂停无头任务，稍后恢复</span></div>
+            <div class="row"><span class="key">disableSkillShellExec</span> <span class="desc"
+                data-zh="禁用 skills/plugins 中的 !`cmd`" data-en="Block !`cmd` in skills/plugins">禁用 skills/plugins 中的
+                !`cmd`<span class="badge-new" data-added="2026-04-04">NEW</span></span></div>
+            <div class="row"><span class="key">forceRemoteSettingsRefresh</span> <span class="desc"
+                data-zh="fail-closed：刷新前阻止启动" data-en="Fail-closed: block startup until fresh">fail-closed：刷新前阻止启动<span
+                  class="badge-new" data-added="2026-04-04">NEW</span></span></div>
             <div class="sub-header" data-zh="关键环境变量" data-en="Key Env Vars">关键环境变量</div>
             <div class="row"><span class="key">ANTHROPIC_API_KEY</span></div>
             <div class="row"><span class="key">ANTHROPIC_MODEL</span></div>
-            <div class="row"><span class="key">CLAUDE_CODE_EFFORT_LEVEL</span> <span class="desc">low/med/high</span>
+            <div class="row"><span class="key">CLAUDE_CODE_EFFORT_LEVEL</span> <span
+                class="desc">low/medium/high/max/auto</span>
             </div>
             <div class="row"><span class="key">MAX_THINKING_TOKENS</span> <span class="desc" data-zh="0=关闭"
                 data-en="0=off">0=关闭</span></div>
             <div class="row"><span class="key">ANTHROPIC_CUSTOM_MODEL_OPTION</span> <span class="desc"
                 data-zh="自定义 /model 条目" data-en="Custom /model entry">自定义 /model 条目</span></div>
-            <div class="row"><span class="key">CLAUDE_CODE_PLUGIN_SEED_DIR</span> <span class="desc" data-zh="多插件种子目录"
-                data-en="Multiple plugin seed dirs">多插件种子目录</span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_SUBPROCESS_ENV_SCRUB</span> <span class="desc"
+                data-zh="对子进程剥离凭据" data-en="Strip creds from subprocs">对子进程剥离凭据</span></div>
+            <div class="row"><span class="key">CLAUDE_STREAM_IDLE_TIMEOUT_MS</span> <span class="desc"
+                data-zh="流式看门狗（默认 90s）" data-en="Streaming watchdog (def 90s)">流式看门狗（默认 90s）</span></div>
+            <div class="row"><span class="key">CLAUDE_CODE_NO_FLICKER</span> <span class="desc"
+                data-zh="备用屏渲染（=1）" data-en="Alt-screen rendering (=1)">备用屏渲染（=1）<span class="badge-new"
+                  data-added="2026-04-04">NEW</span></span></div>
+            <div class="row"><span class="key">MCP_CONNECTION_NONBLOCKING</span> <span class="desc"
+                data-zh="在 -p 中跳过 MCP 等待" data-en="Skip MCP wait in -p">在 -p 中跳过 MCP 等待<span class="badge-new"
+                  data-added="2026-04-04">NEW</span></span></div>
             <div class="row"><span class="key">CLAUDECODE</span> <span class="desc" data-zh="检测 CC shell (=1)"
                 data-en="Detect CC shell (=1)">检测 CC shell (=1)</span></div>
-            <div class="row"><span class="key">IS_DEMO</span> <span class="desc" data-zh="演示模式（隐藏邮箱/组织）"
-                data-en="Demo mode (hide email/org)">演示模式（隐藏邮箱/组织）</span></div>
           </div>
         </section>
       </div>
@@ -1287,6 +1351,9 @@
             <div class="row"><span class="key">effort</span> <span class="desc" data-zh="覆盖 effort 级别"
                 data-en="Override effort level">覆盖 effort 级别<span class="badge-new"
                   data-added="2026-03-23">NEW</span></span></div>
+            <div class="row"><span class="key">paths: [globs]</span> <span class="desc"
+                data-zh="路径限定（YAML 列表）" data-en="Path-specific (YAML list)">路径限定（YAML 列表）<span class="badge-new"
+                  data-added="2026-04-04">NEW</span></span></div>
             <div class="row"><span class="key">context: fork</span> <span class="desc" data-zh="在子代理中运行"
                 data-en="Run in subagent">在子代理中运行</span></div>
             <div class="row"><span class="key">$ARGUMENTS</span> <span class="desc" data-zh="用户输入占位符"
@@ -1295,6 +1362,9 @@
                 data-en="Skill's own directory">技能自身目录</span></div>
             <div class="row"><span class="key">!`cmd`</span> <span class="desc" data-zh="动态上下文注入"
                 data-en="Dynamic context injection">动态上下文注入</span></div>
+            <div class="row"><span class="key">plugin bin/</span> <span class="desc"
+                data-zh="为 Bash 工具附带可执行文件" data-en="Ship executables for Bash tool">为 Bash 工具附带可执行文件<span
+                  class="badge-new" data-added="2026-04-04">NEW</span></span></div>
 
             <div class="sub-header" data-zh="内置代理" data-en="Built-in Agents">内置代理</div>
             <div class="row"><span class="key">Explore</span> <span class="desc" data-zh="快速只读（Haiku）"
@@ -1308,18 +1378,23 @@
 
             <div class="sub-header" data-zh="代理 Frontmatter" data-en="Agent Frontmatter">代理 Frontmatter</div>
             <div class="row"><span class="key">permissionMode</span> <span
-                class="desc">default/acceptEdits/plan/dontAsk/bypass</span></div>
+                class="desc">default/acceptEdits/plan/dontAsk/bypassPermissions</span></div>
             <div class="row"><span class="key">isolation: worktree</span> <span class="desc"
                 data-zh="在 git worktree 中运行" data-en="Run in git worktree">在 git worktree 中运行</span></div>
-            <div class="row"><span class="key">memory: user|project</span> <span class="desc" data-zh="持久化记忆"
-                data-en="Persistent memory">持久化记忆</span></div>
+            <div class="row"><span class="key">memory: user|project|local</span> <span class="desc"
+                data-zh="持久化记忆" data-en="Persistent memory">持久化记忆</span></div>
             <div class="row"><span class="key">background: true</span> <span class="desc" data-zh="后台任务"
                 data-en="Background task">后台任务</span></div>
             <div class="row"><span class="key">maxTurns</span> <span class="desc" data-zh="限制代理轮次"
                 data-en="Limit agentic turns">限制代理轮次</span></div>
+            <div class="row"><span class="key">initialPrompt</span> <span class="desc" data-zh="自动提交首轮"
+                data-en="Auto-submit first turn">自动提交首轮</span></div>
             <div class="row"><span class="key">SendMessage</span> <span class="desc" data-zh="恢复代理（替代 resume）"
                 data-en="Resume agents (replaces resume)">恢复代理（替代 resume）<span class="badge-new"
                   data-added="2026-03-23">NEW</span></span></div>
+            <div class="row"><span class="key">@agent-name</span> <span class="desc" data-zh="提及命名子代理"
+                data-en="Mention named subagents">提及命名子代理<span class="badge-new"
+                  data-added="2026-04-04">NEW</span></span></div>
           </div>
         </section>
 
@@ -1362,6 +1437,9 @@
                 data-en="Cost cap">费用上限</span></div>
             <div class="row"><span class="key">--console</span> <span class="desc" data-zh="通过 Anthropic Console 认证"
                 data-en="Auth via Anthropic Console">通过 Anthropic Console 认证</span></div>
+            <div class="row"><span class="key">Bedrock wizard</span> <span class="desc"
+                data-zh="登录时交互式 AWS 配置" data-en="Interactive AWS setup on login">登录时交互式 AWS 配置<span class="badge-new"
+                  data-added="2026-04-04">NEW</span></span></div>
             <div class="row"><span class="key">--verbose</span> <span class="desc" data-zh="详细输出"
                 data-en="Verbose">详细输出</span></div>
             <div class="row"><span class="key">--bare</span> <span class="desc" data-zh="最小无头模式（无 hooks/LSP）"
@@ -1372,11 +1450,14 @@
                   data-added="2026-03-23">NEW</span></span></div>
             <div class="row"><span class="key">--remote</span> <span class="desc" data-zh="Web 会话"
                 data-en="Web session">Web 会话</span></div>
-            <div class="row"><span class="key">--effort</span> <span class="desc">low/med/high/max</span></div>
+            <div class="row"><span class="key">--effort</span> <span class="desc">low/medium/high/max</span></div>
             <div class="row"><span class="key">--permission-mode</span> <span class="desc">plan/default/…</span></div>
             <div class="row"><span class="key">--dangerously-skip-permissions</span> <span class="desc"
                 data-zh="跳过所有提示 ⚠️" data-en="Skip all prompts ⚠️">跳过所有提示 ⚠️</span></div>
             <div class="row"><span class="key">--chrome</span> <span class="desc">Chrome</span></div>
+            <div class="row"><span class="key">PowerShell tool</span> <span class="desc"
+                data-zh="Windows 可选预览" data-en="Windows opt-in preview">Windows 可选预览<span class="badge-new"
+                  data-added="2026-04-04">NEW</span></span></div>
           </div>
         </section>
       </div>
@@ -1409,7 +1490,7 @@
         <span class="footer-sep">·</span>
         <span class="footer-item"><code>ANTHROPIC_MODEL</code></span>
         <span class="footer-sep">·</span>
-        <span class="footer-item"><code>CLAUDE_CODE_EFFORT_LEVEL</code> (low/med/high)</span>
+        <span class="footer-item"><code>CLAUDE_CODE_EFFORT_LEVEL</code> (low/medium/high/max/auto)</span>
         <span class="footer-sep">·</span>
         <span class="footer-item"><code>MAX_THINKING_TOKENS</code> (<span data-zh="0=关闭"
             data-en="0=off">0=关闭</span>)</span>
@@ -1418,6 +1499,15 @@
             data-en="def 32K">默认 32K</span>)</span>
         <span class="footer-sep">·</span>
         <span class="footer-item"><code>CLAUDE_CODE_DISABLE_CRON</code></span>
+        <span class="footer-sep">·</span>
+        <span class="footer-item"><code>CLAUDE_CODE_SUBPROCESS_ENV_SCRUB</code> (<span data-zh="剥离凭据"
+            data-en="strip creds">剥离凭据</span>)</span>
+        <span class="footer-sep">·</span>
+        <span class="footer-item"><code>CLAUDE_STREAM_IDLE_TIMEOUT_MS</code> (<span data-zh="默认 90s"
+            data-en="def 90s">默认 90s</span>)</span>
+        <span class="footer-sep">·</span>
+        <span class="footer-item"><code>CLAUDE_CODE_NO_FLICKER</code> (<span data-zh="备用屏"
+            data-en="alt-screen">备用屏</span>)</span>
       </div>
     </footer>
   </div>
